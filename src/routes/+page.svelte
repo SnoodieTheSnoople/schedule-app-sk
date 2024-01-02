@@ -5,7 +5,7 @@ import Card from '$lib/Card.svelte';
 
 <div class="mx-auto p-8 space-y-8 bg-white">
 	<h1 class="h1 font-bold">SCHEDULE</h1>
-	<div class="container grid grid-cols-3">
+	<div class="grid grid-cols-3">
 		<section>L</section>
 		<section>Date</section>
 		<section>R</section>
