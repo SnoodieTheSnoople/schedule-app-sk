@@ -6,7 +6,7 @@
 <AppShell slotSidebarLeft="bg-surface-500/5 w-0 lg:w-20">
 	<!-- (header) -->
 	<svelte:fragment slot="sidebarLeft">
-		<AppRail>
+		<AppRail background="bg-primary-500">
 			<AppRailAnchor href="/">SCHEDULE</AppRailAnchor>
 			<AppRailAnchor href="/">REQUESTS</AppRailAnchor>
 		</AppRail>
