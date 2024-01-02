@@ -1,10 +1,22 @@
 <script>
 
+import Card from '$lib/Card.svelte';
 </script>
 
-<svelte:head>
-	Homepage
-</svelte:head>
+<div class="mx-auto p-8 space-y-8 bg-white">
+	<h1 class="h1 font-bold">SCHEDULE</h1>
+	<div class="container grid grid-cols-3">
+		<section>L</section>
+		<section>Date</section>
+		<section>R</section>
+	</div>
 
-<h1>Welcome to SvelteKit</h1>
-<p>Visit <a href="https://kit.svelte.dev">kit.svelte.dev</a> to read the documentation</p>
+	<Card title="MONDAY"/>
+	<Card title="TUESDAY"/>
+	<Card title="WEDNESDAY"/>
+	<Card title="THURSDAY" left_content="13:00" right_content="20:00"/>
+	<Card title="FRIDAY" left_content="13:00" right_content="20:00"/>
+	<Card title="SATURDAY" left_content="13:00" right_content="20:00"/>
+	<Card title="SUNDAY" left_content="13:00" right_content="20:00"/>
+	<Card />
+</div>
