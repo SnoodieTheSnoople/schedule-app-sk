@@ -22,7 +22,9 @@ module.exports = {
 		// 4. Append the Skeleton plugin (after other plugins)
 		skeleton({
 			themes: { preset: [ 'skeleton', 'crimson' ] }
-		})
+		}),
+
+		require('daisyui'),
 	]
 }
 						

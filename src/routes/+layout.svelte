@@ -1,21 +1,23 @@
 <script>
 	import '../app.pcss';
-	import { AppRail, AppRailAnchor, AppShell } from '@skeletonlabs/skeleton';
 </script>
 
-<AppShell slotSidebarLeft="bg-surface-500/5 w-0 lg:w-20">
-	<!-- (header) -->
-	<svelte:fragment slot="sidebarLeft">
-		<AppRail background="bg-primary-500">
-			<AppRailAnchor href="/">SCHEDULE</AppRailAnchor>
-			<AppRailAnchor href="/">REQUESTS</AppRailAnchor>
-		</AppRail>
-	</svelte:fragment>
-	<!-- (sidebarRight) -->
-	<!-- (pageHeader) -->
-	<!-- Router Slot -->
-	<slot />
-	<!-- ---- / ---- -->
-	<!-- (pageFooter) -->
-	<!-- (footer) -->
-</AppShell>
+<div class="drawer md:drawer-open">
+	<input id="my-drawer-2" type="checkbox" class="drawer-toggle" />
+	<div class="drawer-content flex flex-col items-center justify-center">
+		<!-- Page content here -->
+		<slot />
+		<label for="my-drawer-2" class="btn btn-primary drawer-button lg:hidden">Open drawer</label>
+
+	</div>
+	<div class="drawer-side">
+		<label for="my-drawer-2" aria-label="close sidebar" class="drawer-overlay"></label>
+		<ul class="menu p-4 w-40 min-h-full bg-base-200 text-base-content">
+			<!-- Sidebar content here -->
+			<li><a>SCHEDULE</a></li>
+			<li><a>REQUESTS</a></li>
+			<li><a>AVAILABILITY</a></li>
+		</ul>
+
+	</div>
+</div>
