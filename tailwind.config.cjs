@@ -2,6 +2,8 @@
 
 // 1. Import the Skeleton plugin
 const { skeleton } = require('@skeletonlabs/tw-plugin');
+const daisyui = require('daisyui');
+const themes = require('daisyui/src/theming/themes.js');
 
 /** @type {import('tailwindcss').Config} */
 module.exports = {
@@ -17,6 +19,8 @@ module.exports = {
 	],
 	theme: {
 		extend: {},
+
+
 	},
 	plugins: [
 		// 4. Append the Skeleton plugin (after other plugins)
@@ -25,6 +29,24 @@ module.exports = {
 		}),
 
 		require('daisyui'),
-	]
+		],
+	daisyui:
+		{
+			themes: [
+				{
+					defaultTheme: {
+						"primary": "#b55660",
+						"secondary": "#dc9098",
+						"accent": "#e06A77",
+						"neutral": "#831843",
+						"base-100": "#fbf8f9",
+						"info": "#006bff",
+						"success": "#00a064",
+						"warning": "#ffc700",
+						"error": "#be123c"
+					},
+				}
+		]
+	}
 }
 						

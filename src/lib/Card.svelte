@@ -15,10 +15,10 @@
 	export let right_content;
 </script>
 
-<div class="card w-full h-20 grid grid-cols-10 shadow-xl">
-	<div class="rounded-tl-lg rounded-bl-lg border-r-2 border-black col-span-2 bg-red-200 flex items-center justify-center">
+<div class="card w-full h-20 grid grid-cols-10 border-2 border-accent bg-base-100">
+	<div class="rounded-tl-lg rounded-bl-lg border-r-2 border-black col-span-2 bg-accent flex items-center justify-center">
 		<div class="card-title">
-			<h2 class="">{title}</h2>
+			<h2 class="text-white">{title}</h2>
 		</div>
 	</div>
 	<div class="col-span-7 grid grid-cols-2 justify-center items-center">
@@ -36,7 +36,9 @@
 			</span>
 		{/if}
 	</div>
+	{#if left_content && right_content}
 	<div class="col-span-1 flex items-center justify-center">
-		<button class="btn">VIEW</button>
+		<button class="btn bg-accent text-white">VIEW</button>
 	</div>
+	{/if}
 </div>
