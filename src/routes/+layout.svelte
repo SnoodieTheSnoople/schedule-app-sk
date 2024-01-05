@@ -15,8 +15,9 @@
 		<ul class="menu p-4 w-40 min-h-full bg-accent text-base-content">
 			<!-- Sidebar content here -->
 			<li class="text-white"><a href="/"><b>SCHEDULE</b></a></li>
-			<li class="text-white"><a href="/requests"><b>REQUESTS</b></a></li>
 			<li class="text-white"><a href="/availability"><b>AVAILABILITY</b></a></li>
+			<li class="text-white"><a href="/requests"><b>REQUESTS</b></a></li>
+			<li class="text-white"><a href="/shift-swap"><b>SHIFT SWAP</b></a></li>
 		</ul>
 
 	</div>
