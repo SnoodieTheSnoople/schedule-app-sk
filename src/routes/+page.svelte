@@ -3,7 +3,6 @@ import Card from '$lib/Card.svelte';
 import { endOfWeek, format, startOfWeek } from 'date-fns';
 
 let d = new Date();
-
 let start = format(startOfWeek(d, {weekStartsOn: 1}), "dd MMMM yyyy");
 let end = format(endOfWeek(d, {weekStartsOn: 1}), "dd MMMM yyyy");
 
@@ -40,5 +39,4 @@ function currentWeek() {
 	<Card title="FRIDAY" left_content="13:00" right_content="20:00"/>
 	<Card title="SATURDAY" left_content="13:00" right_content="20:00"/>
 	<Card title="SUNDAY" left_content="13:00" right_content="20:00"/>
-	<Card />
 </div>
