@@ -20,7 +20,7 @@
 	<div class="col-span-7 grid grid-cols-2 justify-center items-center">
 		{#if total_employeess}
 		<span class="pl-4">
-			<b>Time Start:</b> {total_employeess}
+			<b>Total Employees:</b> {total_employeess}
 		</span>
 		{:else}
 			<span class="col-span-2 text-center">
