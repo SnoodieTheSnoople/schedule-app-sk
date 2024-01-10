@@ -30,4 +30,6 @@
 		<button class="btn text-start" on:click={nextWeek}>R</button>
 	</div>
 	<button class="btn text-center" on:click={currentWeek}>Current Date</button>
+
+
 </div>
