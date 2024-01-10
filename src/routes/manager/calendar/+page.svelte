@@ -1,5 +1,6 @@
 <script>
 	import { endOfWeek, format, startOfWeek } from 'date-fns';
+	import Card from '$lib/components/Card.svelte';
 
 	let d = new Date();
 	let start = format(startOfWeek(d, {weekStartsOn: 1}), "dd MMMM yyyy");
@@ -31,5 +32,11 @@
 	</div>
 	<button class="btn text-center" on:click={currentWeek}>Current Date</button>
 
-
+	<Card title="MONDAY"/>
+	<Card title="TUESDAY"/>
+	<Card title="WEDNESDAY"/>
+	<Card title="THURSDAY" left_content="13:00"/>
+	<Card title="FRIDAY" left_content="13:00" right_content="20:00"/>
+	<Card title="SATURDAY" left_content="13:00" right_content="20:00"/>
+	<Card title="SUNDAY" left_content="13:00" right_content="20:00"/>
 </div>
