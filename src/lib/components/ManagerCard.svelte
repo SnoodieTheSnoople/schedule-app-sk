@@ -1,4 +1,6 @@
 <script>
+	import { goto } from '$app/navigation';
+
 	/**
 	 * @type {string}
 	 */
@@ -8,6 +10,15 @@
 	 * @type {string}
 	 */
 	export let total_employeess;
+
+	/**
+	 * @type {Date}
+	 */
+	export let date;
+
+	function handleBtnClick() {
+		goto('/calendar', )
+	}
 
 </script>
 

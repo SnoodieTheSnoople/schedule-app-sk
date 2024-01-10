@@ -1,10 +1,11 @@
 <script>
-	import { endOfWeek, format, startOfWeek } from 'date-fns';
+	import { addDays, endOfWeek, format, startOfWeek } from 'date-fns';
 	import ManagerCard from '$lib/components/ManagerCard.svelte';
 
 	let d = new Date();
 	let start = format(startOfWeek(d, {weekStartsOn: 1}), "dd MMMM yyyy");
 	let end = format(endOfWeek(d, {weekStartsOn: 1}), "dd MMMM yyyy");
+	let dates = [];
 
 	function nextWeek() {
 		start = format(startOfWeek(d.setDate(d.getDate() + 7), {weekStartsOn: 1}), "dd MMMM yyyy");
@@ -21,6 +22,18 @@
 		start = format(startOfWeek(new Date(), {weekStartsOn: 1}), "dd MMMM yyyy");
 		end = format(endOfWeek(new Date(), {weekStartsOn: 1}), "dd MMMM yyyy");
 	}
+
+	function generateDays() {
+		let day = start;
+		for (let i = 0; i < 7; i++) {
+			dates.push(format(addDays(day, i), "dd MMMM yyyy"));
+		}
+		getDays();
+	}
+
+	function getDays() {
+		console.log(dates)
+	}
 </script>
 
 <div class="mx-auto p-8 space-y-8 w-full h-full bg-white">
@@ -31,6 +44,15 @@
 		<button class="btn text-start" on:click={nextWeek}>R</button>
 	</div>
 	<button class="btn text-center" on:click={currentWeek}>Current Date</button>
+	<button on:click={generateDays}>Press To Generate Days</button>
+	<div id="daysOfWeek">
+		{#if dates}
+			{#each dates as day}
+				<p>{day}</p>
+			{/each}
+		{/if}
+	</div>
+
 
 	<ManagerCard title="MONDAY" total_employeess="7"/>
 	<ManagerCard title="TUESDAY" total_employeess="6"/>
