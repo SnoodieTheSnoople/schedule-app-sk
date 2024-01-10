@@ -1,5 +1,5 @@
 <script>
-import Card from '$lib/Card.svelte';
+import Card from '$lib/components/Card.svelte';
 import { endOfWeek, format, startOfWeek } from 'date-fns';
 
 let d = new Date();

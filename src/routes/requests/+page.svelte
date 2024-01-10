@@ -1,6 +1,6 @@
 <script>
 
-import TertiaryCard from '$lib/TertiaryCard.svelte';
+import TertiaryCard from '$lib/components/TertiaryCard.svelte';
 </script>
 
 <div class="mx-auto p-8 space-y-8 w-full h-full bg-white">
