@@ -6,21 +6,28 @@
 	let start = format(startOfWeek(d, {weekStartsOn: 1}), "dd MMMM yyyy");
 	let end = format(endOfWeek(d, {weekStartsOn: 1}), "dd MMMM yyyy");
 	let dates = [];
+	generateDays();
 
 	function nextWeek() {
 		start = format(startOfWeek(d.setDate(d.getDate() + 7), {weekStartsOn: 1}), "dd MMMM yyyy");
 		end = format(endOfWeek(d.setDate(d.getDate()), {weekStartsOn: 1}), "dd MMMM yyyy");
+		dates = [];
+		generateDays();
 	}
 
 	function lastWeek() {
 		start = format(startOfWeek(d.setDate(d.getDate() - 7), {weekStartsOn: 1}), "dd MMMM yyyy");
 		end = format(endOfWeek(d.setDate(d.getDate()), {weekStartsOn: 1}), "dd MMMM yyyy");
+		dates = [];
+		generateDays();
 	}
 
 	function currentWeek() {
 		d = new Date();
 		start = format(startOfWeek(new Date(), {weekStartsOn: 1}), "dd MMMM yyyy");
 		end = format(endOfWeek(new Date(), {weekStartsOn: 1}), "dd MMMM yyyy");
+		dates = [];
+		generateDays();
 	}
 
 	function generateDays() {
@@ -28,12 +35,13 @@
 		for (let i = 0; i < 7; i++) {
 			dates.push(format(addDays(day, i), "dd MMMM yyyy"));
 		}
-		getDays();
+		outputDates();
 	}
 
-	function getDays() {
-		console.log(dates)
+	function outputDates() {
+		console.log(dates);
 	}
+
 </script>
 
 <div class="mx-auto p-8 space-y-8 w-full h-full bg-white">
