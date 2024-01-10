@@ -52,21 +52,11 @@
 		<button class="btn text-start" on:click={nextWeek}>R</button>
 	</div>
 	<button class="btn text-center" on:click={currentWeek}>Current Date</button>
-	<button on:click={generateDays}>Press To Generate Days</button>
-	<div id="daysOfWeek">
-		{#if dates}
-			{#each dates as day}
-				<p>{day}</p>
-			{/each}
-		{/if}
-	</div>
 
 
-	<ManagerCard title="MONDAY" total_employeess="7"/>
-	<ManagerCard title="TUESDAY" total_employeess="6"/>
-	<ManagerCard title="WEDNESDAY" total_employeess="7"/>
-	<ManagerCard title="THURSDAY" total_employeess="7"/>
-	<ManagerCard title="FRIDAY" total_employeess="8"/>
-	<ManagerCard title="SATURDAY" total_employeess="8"/>
-	<ManagerCard title="SUNDAY" total_employeess="8"/>
+	{#each dates as day}
+		<!-- Temporary until API made -->
+		<ManagerCard title="{format(day, 'EEEE').toUpperCase()}" total_employeess="{Math.floor(Math.random() * 10) === 0 ? 1 : Math.floor(Math.random() * 10)}" date="{day}"/>
+		<p>{day}</p>
+	{/each}
 </div>
