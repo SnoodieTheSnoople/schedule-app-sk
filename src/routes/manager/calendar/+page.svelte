@@ -56,7 +56,7 @@
 
 	{#each dates as day}
 		<!-- Temporary until API made -->
-		<ManagerCard title="{format(day, 'EEEE').toUpperCase()}" total_employeess="{Math.floor(Math.random() * 10) === 0 ? 1 : Math.floor(Math.random() * 10)}" date="{day}"/>
+		<ManagerCard title="{format(day, 'EEEE').toLowerCase()}" total_employeess="{Math.floor(Math.random() * 10) === 0 ? 1 : Math.floor(Math.random() * 10)}" date="{day}"/>
 		<p>{day}</p>
 	{/each}
 </div>

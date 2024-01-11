@@ -12,12 +12,12 @@
 	export let total_employeess;
 
 	/**
-	 * @type {Date}
+	 * @type {String}
 	 */
 	export let date;
 
 	function handleBtnClick() {
-		goto('/calendar', )
+		goto(`calendar/${title}`)
 	}
 
 </script>
@@ -25,7 +25,7 @@
 <div class="card w-full h-20 grid grid-cols-10 border-2 border-accent bg-base-100">
 	<div class="rounded-tl-lg rounded-bl-lg border-r-2 border-black col-span-2 bg-accent flex items-center justify-center">
 		<div class="card-title">
-			<h2 class="text-white">{title}</h2>
+			<h2 class="text-white">{title.toUpperCase()}</h2>
 		</div>
 	</div>
 	<div class="col-span-7 grid grid-cols-2 justify-center items-center">
@@ -41,7 +41,7 @@
 	</div>
 	{#if total_employeess}
 		<div class="col-span-1 flex items-center justify-center">
-			<button class="btn bg-accent text-white">VIEW</button>
+			<button class="btn bg-accent text-white" on:click={handleBtnClick}>VIEW</button>
 		</div>
 	{/if}
 </div>
