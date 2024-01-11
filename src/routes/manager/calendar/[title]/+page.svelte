@@ -37,19 +37,23 @@
 		);
 		return !!cellEntry;
 	}
+
+	function handleSubmit() {
+		console.log("Submitted");
+	}
 </script>
 
 <div class="mx-auto p-8 space-y-8 w-full h-full bg-white">
 	<h1 class="h1 font-bold">DAY</h1>
 
-	<!-- Open the modal using ID.showModal() method -->
+	<!-- Modal -->
 	<button class="btn" onclick="addUserModal.showModal()">Add</button>
 
 	<dialog id="addUserModal" class="modal">
 		<div class="modal-box">
 			<h3 class="font-bold text-lg">Add Employee</h3>
 
-			<form>
+			<form id="modalForm" on:submit={handleSubmit}>
 				<div class="grid grid-cols-3">
 					<p class="flex items-center justify-center">Employee</p>
 					<select class="select select-accent w-full max-w-xs col-span-2">
@@ -64,16 +68,16 @@
 
 				<div class="grid grid-cols-3 gap-1">
 					<p class="flex items-center justify-center">Availability</p>
-					<input type="text" placeholder="Placeholder" class="input input-bordered w-full max-w-xs" disabled />
-					<input type="text" placeholder="Placeholder" class="input input-bordered w-full max-w-xs" disabled />
+					<input type="text" placeholder="Time Start" class="input input-bordered w-full max-w-xs" disabled />
+					<input type="text" placeholder="Time End" class="input input-bordered w-full max-w-xs" disabled />
 				</div>
 
 				<div class="divider"></div>
 
 				<div class="grid grid-cols-3 gap-1">
 					<p class="flex items-center justify-center">Preferred Shift</p>
-					<input type="text" placeholder="Placeholder" class="input input-bordered w-full max-w-xs" disabled />
-					<input type="text" placeholder="Placeholder" class="input input-bordered w-full max-w-xs" disabled />
+					<input type="text" placeholder="Time Start" class="input input-bordered w-full max-w-xs" disabled />
+					<input type="text" placeholder="Time End" class="input input-bordered w-full max-w-xs" disabled />
 				</div>
 
 				<div class="divider"></div>
@@ -83,14 +87,14 @@
 					<select class="select select-accent w-full max-w-xs">
 						<option>Time Start</option>
 						{#each hours as hour}
-							<option>{hour}</option>
+							<option>{format(hour, "HH:mm")}</option>
 						{/each}
 					</select>
 
 					<select class="select select-accent w-full max-w-xs">
 						<option>Time End</option>
 						{#each hours as hour}
-							<option>{hour}</option>
+							<option>{format(hour, "HH:mm")}</option>
 						{/each}
 					</select>
 				</div>
@@ -100,11 +104,13 @@
 				<form method="dialog">
 					<!-- if there is a button in form, it will close the modal -->
 					<button class="btn btn-error">Close</button>
-					<button class="btn btn-success">Submit</button>
+					<button class="btn btn-success" type="submit" form="modalForm">Submit</button>
 				</form>
 			</div>
 		</div>
 	</dialog>
+
+	<!-- Main Body -->
 
 	<div class="overflow-x-auto">
 		<table class="table table-pin-rows table-pin-cols">
