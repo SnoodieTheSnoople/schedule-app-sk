@@ -41,7 +41,7 @@
 	</div>
 	{#if total_employeess}
 		<div class="col-span-1 flex items-center justify-center">
-			<button class="btn bg-accent text-white" on:click={handleBtnClick}>VIEW</button>
+			<button class="btn bg-accent text-white" on:click={() => handleBtnClick()}>VIEW</button>
 		</div>
 	{/if}
 </div>

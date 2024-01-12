@@ -41,6 +41,7 @@
 	},
 	"type": "module",
 	"dependencies": {
+		"@supabase/supabase-js": "^2.39.3",
 		"date-fns": "^3.0.6"
 	}
 }

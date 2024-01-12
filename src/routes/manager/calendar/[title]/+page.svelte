@@ -1,6 +1,9 @@
 <script>
 	import { addHours, format, startOfDay } from 'date-fns';
 
+	export let data;
+	const day = data.props.title;
+
 	/**
 	 * @type {Date[]}
 	 */
@@ -44,7 +47,7 @@
 </script>
 
 <div class="mx-auto p-8 space-y-8 w-full h-full bg-white">
-	<h1 class="h1 font-bold">DAY</h1>
+	<h1 class="h1 font-bold">{day.toUpperCase()}</h1>
 
 	<!-- Modal -->
 	<button class="btn" onclick="addUserModal.showModal()">Add</button>
@@ -58,8 +61,8 @@
 					<p class="flex items-center justify-center">Employee</p>
 					<select class="select select-accent w-full max-w-xs col-span-2">
 						<option>Select Employee</option>
-						{#each tmp as { name }}
-							<option>{name}</option>
+						{#each data.employees as data}
+							<option>{data.users.firstname} {data.users.surname}</option>
 						{/each}
 					</select>
 				</div>
