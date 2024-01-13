@@ -2,7 +2,14 @@
 	import { addHours, format, startOfDay } from 'date-fns';
 
 	export let data;
+
+	const employees = data.employees;
+	const availabilities = data.availabiltiies;
+
 	const day = data.props.title;
+
+	let selectedEmployee = null;
+	let employeeAvailability = {};
 
 	/**
 	 * @type {Date[]}
@@ -41,6 +48,11 @@
 		return !!cellEntry;
 	}
 
+	function fillEmployeeAvailability(event) {
+		selectedEmployee = event.target.value;
+		employeeAvailability = availabilities.find(x => x.employees.id === selectedEmployee);
+	}
+
 	function handleSubmit() {
 		console.log("Submitted");
 	}
@@ -59,10 +71,10 @@
 			<form id="modalForm" on:submit={handleSubmit}>
 				<div class="grid grid-cols-3">
 					<p class="flex items-center justify-center">Employee</p>
-					<select class="select select-accent w-full max-w-xs col-span-2">
+					<select id="employeeSelection" class="select select-accent w-full max-w-xs col-span-2" bind:value={selectedEmployee} on:change={fillEmployeeAvailability}>
 						<option>Select Employee</option>
-						{#each data.employees as data}
-							<option>{data.users.firstname} {data.users.surname}</option>
+						{#each employees as employee}
+							<option value="{employee.id}">{employee.users.firstname} {employee.users.surname}</option>
 						{/each}
 					</select>
 				</div>
@@ -71,16 +83,16 @@
 
 				<div class="grid grid-cols-3 gap-1">
 					<p class="flex items-center justify-center">Availability</p>
-					<input type="text" placeholder="Time Start" class="input input-bordered w-full max-w-xs" disabled />
-					<input type="text" placeholder="Time End" class="input input-bordered w-full max-w-xs" disabled />
+					<input type="text" value="{employeeAvailability.available_time_from}" class="input input-bordered w-full max-w-xs" disabled />
+					<input type="text" value="{employeeAvailability.available_time_to}" class="input input-bordered w-full max-w-xs" disabled />
 				</div>
 
 				<div class="divider"></div>
 
 				<div class="grid grid-cols-3 gap-1">
 					<p class="flex items-center justify-center">Preferred Shift</p>
-					<input type="text" placeholder="Time Start" class="input input-bordered w-full max-w-xs" disabled />
-					<input type="text" placeholder="Time End" class="input input-bordered w-full max-w-xs" disabled />
+					<input type="text" value="{employeeAvailability.preferred_time_from}" class="input input-bordered w-full max-w-xs" disabled />
+					<input type="text" value="{employeeAvailability.preferred_time_to}" class="input input-bordered w-full max-w-xs" disabled />
 				</div>
 
 				<div class="divider"></div>
