@@ -119,7 +119,7 @@
 				<form method="dialog">
 					<!-- if there is a button in form, it will close the modal -->
 					<button class="btn btn-error">Close</button>
-					<button class="btn btn-success" type="submit" form="modalForm">Submit</button>
+					<button class="btn btn-success" type="submit" form="modalForm" on:submit={handleSubmit}>Submit</button>
 				</form>
 			</div>
 		</div>
