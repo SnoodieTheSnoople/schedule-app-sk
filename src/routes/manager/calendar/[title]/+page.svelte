@@ -12,6 +12,12 @@
 	let employeeAvailability = {};
 
 	/**
+	 * @type {Date}
+	 */
+	let newShiftTimeFrom = "";
+	let newShiftTimeTo = "";
+
+	/**
 	 * @type {Date[]}
 	 */
 	let hours = generateHoursArray();
@@ -99,14 +105,14 @@
 
 				<div class="grid grid-cols-3 gap-1">
 					<p class="flex items-center justify-center">Time Block</p>
-					<select class="select select-accent w-full max-w-xs">
+					<select class="select select-accent w-full max-w-xs" bind:value={newShiftTimeFrom}>
 						<option>Time Start</option>
 						{#each hours as hour}
 							<option>{format(hour, "HH:mm")}</option>
 						{/each}
 					</select>
 
-					<select class="select select-accent w-full max-w-xs">
+					<select class="select select-accent w-full max-w-xs" bind:value={newShiftTimeTo}>
 						<option>Time End</option>
 						{#each hours as hour}
 							<option>{format(hour, "HH:mm")}</option>
