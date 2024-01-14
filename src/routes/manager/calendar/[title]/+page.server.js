@@ -1,4 +1,5 @@
 import { supabase } from '$lib/supabaseClient.js';
+import { getAvailabilities, getUsersAndNames } from '$lib/supabaseCommands.js';
 
 export async function load({ params }) {
 	const { title } = params;
@@ -17,6 +18,7 @@ export async function load({ params }) {
 
 }
 
+/*
 async function getUsersAndNames() {
 	const { data, error } = await supabase.from("employees").select(`
 	id,
@@ -45,3 +47,5 @@ async function getAvailabilities(arg) {
 
 	return data;
 }
+
+ */
