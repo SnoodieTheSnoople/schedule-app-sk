@@ -8,19 +8,22 @@
 
 	const day = data.props.title;
 
-	let selectedEmployee = null;
+	/** @type {string} */
+	let selectedEmployee = "";
+
+	/** @type {object} */
 	let employeeAvailability = {};
 
-	/**
-	 * @type {Date}
-	 */
+	/** @type {string} */
 	let newShiftTimeFrom = "";
+
+	/** @type {string} */
 	let newShiftTimeTo = "";
 
-	/**
-	 * @type {Date[]}
-	 */
+	/** @type {Date[]} */
 	let hours = generateHoursArray();
+
+	//TODO: Get date from URL props.
 
 	const tmp = [
 		{ name: 'John', schedule: [{ start: 8, end: 16 }] },
@@ -61,6 +64,18 @@
 
 	function handleSubmit() {
 		console.log("Submitted");
+
+		console.log(selectedEmployee);
+		//console.log(date);
+		console.log(newShiftTimeFrom);
+		console.log(newShiftTimeTo);
+
+		//await return from func.
+	}
+
+	function handleChange() {
+		console.log(newShiftTimeFrom);
+		console.log(newShiftTimeTo);
 	}
 </script>
 
@@ -112,7 +127,7 @@
 						{/each}
 					</select>
 
-					<select class="select select-accent w-full max-w-xs" bind:value={newShiftTimeTo}>
+					<select class="select select-accent w-full max-w-xs" bind:value={newShiftTimeTo} on:change={handleChange}>
 						<option>Time End</option>
 						{#each hours as hour}
 							<option>{format(hour, "HH:mm")}</option>
