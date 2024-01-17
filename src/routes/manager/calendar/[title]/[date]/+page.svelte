@@ -1,5 +1,6 @@
 <script>
 	import { addHours, format, startOfDay } from 'date-fns';
+	import { createSchedule } from '$lib/supabaseCommands.js';
 
 	export let data;
 
@@ -8,6 +9,8 @@
 
 	const day = data.props.title;
 	const date = data.props.date;
+
+	let isOpen = false;
 
 	/** @type {string} */
 	let selectedEmployee = "";
@@ -63,16 +66,23 @@
 		employeeAvailability = availabilities.find(x => x.employees.id === selectedEmployee);
 	}
 
+	function toggleModal() {
+		isOpen = !isOpen;
+	}
+
 	function handleSubmit() {
-		console.log("Submitted");
-
-		console.log(selectedEmployee);
-		//console.log(date);
-		console.log(newShiftTimeFrom);
-		console.log(newShiftTimeTo);
-
-		//await return from func.
-		console.log(date)
+		try {
+			createSchedule(selectedEmployee, date, newShiftTimeFrom, newShiftTimeTo).then( data => {
+				console.log("Success!", data);
+				toggleModal();
+			}).catch(error => {
+				console.error("Error!", error);
+			});
+			// Function works
+			// TODO: Handle return and close modal.
+		} catch (e) {
+			console.error(e);
+		}
 	}
 
 	function handleChange() {
@@ -85,9 +95,9 @@
 	<h1 class="h1 font-bold">{day.toUpperCase()}</h1>
 
 	<!-- Modal -->
-	<button class="btn" onclick="addUserModal.showModal()">Add</button>
+	<button class="btn" on:click={toggleModal}>Add</button>
 
-	<dialog id="addUserModal" class="modal">
+	<dialog id="addUserModal" class="modal" class:modal-open={isOpen}>
 		<div class="modal-box">
 			<h3 class="font-bold text-lg">Add Employee</h3>
 
