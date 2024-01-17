@@ -7,6 +7,7 @@
 	const availabilities = data.availabiltiies;
 
 	const day = data.props.title;
+	const date = data.props.date;
 
 	/** @type {string} */
 	let selectedEmployee = "";
@@ -71,6 +72,7 @@
 		console.log(newShiftTimeTo);
 
 		//await return from func.
+		console.log(date)
 	}
 
 	function handleChange() {

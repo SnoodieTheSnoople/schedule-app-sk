@@ -1,5 +1,6 @@
 <script>
 	import { goto } from '$app/navigation';
+	import { format } from 'date-fns';
 
 	/**
 	 * @type {string}
@@ -17,7 +18,7 @@
 	export let date;
 
 	function handleBtnClick() {
-		goto(`calendar/${title}`)
+		goto(`calendar/${title}/${date}`)
 	}
 
 </script>
