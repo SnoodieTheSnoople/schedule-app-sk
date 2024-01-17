@@ -14,6 +14,7 @@ export async function getUsersAndNames() {
 	return data;
 }
 
+
 export async function getAvailabilities(arg) {
 	const { data, error } = await supabase.from("availabilities").select( `
 	day,
@@ -25,7 +26,7 @@ export async function getAvailabilities(arg) {
 	employees(id)|inner(id)`).eq('day', arg);
 
 	if (error) {
-		throw error;
+		console.error("Failed to fetch data: ", error);
 	}
 
 	return data;
@@ -38,7 +39,22 @@ export async function getSchedules(date) {
 	time_to`).eq('date', date);
 
 	if (error) {
-		throw error;
+		console.error("Failed to fetch data: ", error);
+	}
+
+	return data;
+}
+
+export async function createSchedule(employee_id, schedule_date, schedule_time_from, schedule_time_to) {
+	const { data, error } = await supabase.from("schedules").insert({
+		emp_id: employee_id,
+		date: schedule_date,
+		time_from: schedule_time_from,
+		time_to: schedule_time_to
+	}).select();
+
+	if (error) {
+		console.error("Failed to insert data: ", error);
 	}
 
 	return data;
