@@ -60,8 +60,8 @@
 		const endHour = parse(timeTo[0], 'HH:mm:ss', date).getHours();
 		// console.log(timeTo);
 
-		if (hour.getHours() >= startHour && hour.getHours() <= endHour) return true;
-		return false;
+		return hour.getHours() >= startHour && hour.getHours() <= endHour;
+
 	}
 
 	/** @return {Date[]} */
