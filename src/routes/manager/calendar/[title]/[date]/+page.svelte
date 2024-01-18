@@ -52,7 +52,6 @@
 	 * @return {boolean}
 	 */
 	function populateScheduleTable(hour, schedule) {
-		for(let i = 0; i <)
 		const timeFrom = schedule.time_from.split('+');
 		const startHour = parse(timeFrom[0], 'HH:mm:ss', date).getHours();
 		// console.log(date);
