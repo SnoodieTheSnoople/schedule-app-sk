@@ -41,6 +41,8 @@
 		isOpen = !isOpen;
 	}*/
 
+	// TODO: Validation for when creating a new schedule. Ensure that the employee already is not scheduled for that day.
+
 	function fillEmployeeAvailability(event) {
 		selectedEmployee = event.target.value;
 		employeeAvailability = availabilities.find(x => x.employees.id === selectedEmployee);

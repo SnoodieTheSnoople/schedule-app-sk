@@ -67,6 +67,7 @@
 <div class="mx-auto p-8 space-y-8 w-full h-full bg-white">
 
 	<!-- Main Body -->
+	<!-- Grid layout made due to the header moving down when the modal appears on the screen if the condition is met. -->
 	<div class="grid grid-cols-2">
 		<h1 class="h1 font-bold">{day.toUpperCase()}</h1>
 		{#if isOpen}
@@ -76,7 +77,16 @@
 	</div>
 
 	<!-- Toggle Modal Button-->
-	<button class="btn" on:click={() => isOpen = true}>Add</button>
+	<div>
+		<!-- TODO: Add modal on:click for remove button.		-->
+		<!-- TODO: UCN 1.3 -->
+		<button class="btn btn-error text-white">Remove</button>
+
+		<!-- TODO: Add modal on:click for edit button.		-->
+		<!-- TODO: UCN 1.2 -->
+		<button class="btn btn-info text-white">Edit</button>
+		<button class="btn btn-success text-white" on:click={() => isOpen = true}>Add</button>
+	</div>
 
 	<!-- Table -->
 	<div class="overflow-x-auto">
