@@ -76,18 +76,6 @@
 		return hoursArray;
 	}
 
-	/**
-	 * @param hour {Date}
- 	 * @param schedule {{start: number, end: number}[]}
-	 * @return {boolean}
-	 */
-	function getScheduleData(hour, schedule) {
-		const cellEntry = schedule.find(
-			x => hour.getHours() >= x.start && hour.getHours() <= x.end
-		);
-		return !!cellEntry;
-	}
-
 	function fillEmployeeAvailability(event) {
 		selectedEmployee = event.target.value;
 		employeeAvailability = availabilities.find(x => x.employees.id === selectedEmployee);
