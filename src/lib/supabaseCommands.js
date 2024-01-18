@@ -34,6 +34,7 @@ export async function getAvailabilities(arg) {
 
 export async function getSchedules(date) {
 	const { data, error } = await supabase.from("schedules").select(`
+	emp_id,
 	date,
 	time_from,
 	time_to`).eq('date', date);
