@@ -1,6 +1,6 @@
 <script>
 	import { format } from 'date-fns';
-	import { createSchedule } from '$lib/supabaseCommands.js';
+	import * as commands from '$lib/supabaseCommands.js';
 
 	/** @type {Date[]} */
 	export let hours;
@@ -14,6 +14,12 @@
 	export let availabilities;
 
 	export let toggleModal;
+
+	/** @type {number} */
+	export let modalType;
+
+	/** @type {string} */
+	let title = createTitle();
 
 
 	/** @type {boolean} */
@@ -42,6 +48,13 @@
 	}*/
 
 	// TODO: Validation for when creating a new schedule. Ensure that the employee already is not scheduled for that day.
+	// TODO: Refresh and query db when successfully inserting data.
+
+	function createTitle() {
+		if (modalType === 1) return "Add";
+		else if (modalType === 2) return "Edit";
+		else if (modalType === 0) return "Remove";
+	}
 
 	function fillEmployeeAvailability(event) {
 		selectedEmployee = event.target.value;
@@ -50,7 +63,7 @@
 
 	function handleSubmit() {
 		try {
-			createSchedule(selectedEmployee, date, newShiftTimeFrom, newShiftTimeTo).then( data => {
+			commands.createSchedule(selectedEmployee, date, newShiftTimeFrom, newShiftTimeTo).then( data => {
 				if (data !== null) {
 					console.log("Success!", data);
 					toggleModal();
@@ -65,6 +78,18 @@
 		} catch (e) {
 			console.error(e);
 		}
+	}
+
+	function removeEmployee() {
+		try {
+			commands.removeSchedule(selectedEmployee, date, newShiftTimeFrom, newShiftTimeTo)
+		} catch (error) {
+			console.error(error);
+		}
+	}
+
+	function editEmployee() {
+
 	}
 
 	function handleChange() {
@@ -83,12 +108,12 @@
 
 	<div role="alert" class="alert alert-success absolute top-0 left-0 w-full p-4 bg-red-500 text-white" class:hidden={!showSuccessAlert} >
 		<svg xmlns="http://www.w3.org/2000/svg" class="stroke-current shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-		<span>Your purchase has been confirmed!</span>
+		<span>Successfully inserted data!</span>
 	</div>
 
 	<!-- Modal body -->
 	<div class="modal-box">
-		<h3 class="font-bold text-lg">Add Employee</h3>
+		<h3 class="font-bold text-lg">{title} Employee</h3>
 
 		<form id="modalForm" on:submit={handleSubmit}>
 			<div class="grid grid-cols-3">
@@ -101,40 +126,65 @@
 				</select>
 			</div>
 
-			<div class="divider"></div>
+			{#if modalType === 1 || modalType === 2}
+				<div class="divider"></div>
 
-			<div class="grid grid-cols-3 gap-1">
-				<p class="flex items-center justify-center">Availability</p>
-				<input type="text" value="{employeeAvailability.available_time_from}" class="input input-bordered w-full max-w-xs" disabled />
-				<input type="text" value="{employeeAvailability.available_time_to}" class="input input-bordered w-full max-w-xs" disabled />
-			</div>
+				<div class="grid grid-cols-3 gap-1">
+					<p class="flex items-center justify-center">Availability</p>
+					<input type="text" value="{employeeAvailability.available_time_from}" class="input input-bordered w-full max-w-xs" disabled />
+					<input type="text" value="{employeeAvailability.available_time_to}" class="input input-bordered w-full max-w-xs" disabled />
+				</div>
 
-			<div class="divider"></div>
+				<div class="divider"></div>
 
-			<div class="grid grid-cols-3 gap-1">
-				<p class="flex items-center justify-center">Preferred Shift</p>
-				<input type="text" value="{employeeAvailability.preferred_time_from}" class="input input-bordered w-full max-w-xs" disabled />
-				<input type="text" value="{employeeAvailability.preferred_time_to}" class="input input-bordered w-full max-w-xs" disabled />
-			</div>
+				<div class="grid grid-cols-3 gap-1">
+					<p class="flex items-center justify-center">Preferred Shift</p>
+					<input type="text" value="{employeeAvailability.preferred_time_from}" class="input input-bordered w-full max-w-xs" disabled />
+					<input type="text" value="{employeeAvailability.preferred_time_to}" class="input input-bordered w-full max-w-xs" disabled />
+				</div>
 
-			<div class="divider"></div>
 
-			<div class="grid grid-cols-3 gap-1">
-				<p class="flex items-center justify-center">Time Block</p>
-				<select class="select select-accent w-full max-w-xs" bind:value={newShiftTimeFrom}>
-					<option>Time Start</option>
-					{#each hours as hour}
-						<option>{format(hour, "HH:mm")}</option>
-					{/each}
-				</select>
+				<div class="divider"></div>
 
-				<select class="select select-accent w-full max-w-xs" bind:value={newShiftTimeTo} on:change={handleChange}>
-					<option>Time End</option>
-					{#each hours as hour}
-						<option>{format(hour, "HH:mm")}</option>
-					{/each}
-				</select>
-			</div>
+
+				<div class="grid grid-cols-3 gap-1">
+					<p class="flex items-center justify-center">Time Block</p>
+					<select class="select select-accent w-full max-w-xs" bind:value={newShiftTimeFrom}>
+						<option>Time Start</option>
+						{#each hours as hour}
+							<option>{format(hour, "HH:mm")}</option>
+						{/each}
+					</select>
+
+					<select class="select select-accent w-full max-w-xs" bind:value={newShiftTimeTo} on:change={handleChange}>
+						<option>Time End</option>
+						{#each hours as hour}
+							<option>{format(hour, "HH:mm")}</option>
+						{/each}
+					</select>
+				</div>
+
+			{/if}
+
+
+			{#if modalType === 0}
+
+				<div class="divider"></div>
+
+				<div class="grid grid-cols-3 gap-1">
+					<p class="flex items-center justify-center">Shift From</p>
+					<!-- TODO: Get time_from when selecting employee. -->
+					<input type="text" value="{employeeAvailability.preferred_time_from}" class="input input-bordered w-full max-w-xs" disabled />
+				</div>
+
+				<div class="divider"></div>
+
+				<div class="grid grid-cols-3 gap-1">
+					<p class="flex items-center justify-center">Shift To</p>
+					<!-- TODO: Get time_to when selecting employee. -->
+					<input type="text" value="{employeeAvailability.preferred_time_from}" class="input input-bordered w-full max-w-xs" disabled />
+				</div>
+			{/if}
 		</form>
 
 		<div class="modal-action">

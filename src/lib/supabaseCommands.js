@@ -60,3 +60,15 @@ export async function createSchedule(employee_id, schedule_date, schedule_time_f
 
 	return data;
 }
+
+export async function removeSchedule(employee_id, schedule_date, schedule_time_from, schedule_time_to) {
+	const { error } = await supabase.from("schedules").delete()
+		.eq("emp_id", employee_id)
+		.eq("date", schedule_date)
+		.eq("time_from", schedule_time_from)
+		.eq("time_to", schedule_time_to);
+
+	if (error) {
+		return error;
+	}
+}

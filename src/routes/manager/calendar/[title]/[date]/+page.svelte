@@ -15,7 +15,10 @@
 	const date = data.props.date;
 
 	/** @type {boolean} */
-	let isOpen = false;
+	let showModal = false;
+
+	/** @type {number} */
+	let action = -1;
 
 	/** @type {Date[]} */
 	let hours = generateHoursArray();
@@ -58,8 +61,25 @@
 		return hoursArray;
 	}
 
-	function toggleModal() {
-		isOpen = !isOpen;
+	function toggleAddModal() {
+		//addModalOpen = !addModalOpen;
+		showModal = !showModal;
+		action = 1;
+	}
+
+	function toggleRemoveModal() {
+		//removeModalOpen = !removeModalOpen;
+		showModal = !showModal;
+		action = 0;
+	}
+
+	function toggleEditModal() {
+		showModal = !showModal;
+		action = 2;
+	}
+
+	function closeModal() {
+		action = -1;
 	}
 
 </script>
@@ -70,22 +90,17 @@
 	<!-- Grid layout made due to the header moving down when the modal appears on the screen if the condition is met. -->
 	<div class="grid grid-cols-2">
 		<h1 class="h1 font-bold">{day.toUpperCase()}</h1>
-		{#if isOpen}
-			<Modal hours="{hours}" date="{date}" employees="{employees}" availabilities="{availabilities}" toggleModal="{toggleModal}"/>
+		{#if action !== -1}
+			<Modal hours="{hours}" date="{date}" employees="{employees}" availabilities="{availabilities}" toggleModal="{closeModal}" modalType="{action}"/>
 		{/if}
 
 	</div>
 
 	<!-- Toggle Modal Button-->
 	<div>
-		<!-- TODO: Add modal on:click for remove button.		-->
-		<!-- TODO: UCN 1.3 -->
-		<button class="btn btn-error text-white">Remove</button>
-
-		<!-- TODO: Add modal on:click for edit button.		-->
-		<!-- TODO: UCN 1.2 -->
-		<button class="btn btn-info text-white">Edit</button>
-		<button class="btn btn-success text-white" on:click={() => isOpen = true}>Add</button>
+		<button class="btn btn-error text-white" on:click={ toggleRemoveModal }>Remove</button>
+		<button class="btn btn-info text-white" on:click={ toggleEditModal }>Edit</button>
+		<button class="btn btn-success text-white" on:click={ toggleAddModal }>Add</button>
 	</div>
 
 	<!-- Table -->
