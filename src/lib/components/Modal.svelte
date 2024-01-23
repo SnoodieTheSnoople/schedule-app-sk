@@ -10,6 +10,7 @@
 
 	/** @type {Object} */
 	export let employees;
+	export let schedule;
 
 	export let availabilities;
 
@@ -43,6 +44,8 @@
 	/** @type {string} */
 	let newShiftTimeTo = "";
 
+	let employeeSchedule = {};
+
 	/*function toggleModal() {
 		isOpen = !isOpen;
 	}*/
@@ -56,13 +59,29 @@
 		else if (modalType === 0) return "Remove";
 	}
 
-	function fillEmployeeAvailability(event) {
+	function fillReadonlyFields(event) {
 		selectedEmployee = event.target.value;
+		fillEmployeeAvailability();
+		fillEmployeeCurrentSchedule();
+	}
+
+	function fillEmployeeAvailability() {
+		// selectedEmployee = event.target.value;
 		employeeAvailability = availabilities.find(x => x.employees.id === selectedEmployee);
 	}
 
+	function fillEmployeeCurrentSchedule() {
+		// selectedEmployee = event.target.value;
+		employeeSchedule = schedule.find(x => x.emp_id === selectedEmployee);
+	}
+
 	function handleSubmit() {
-		try {
+		if (modalType === 1 || modalType === 2) {
+			insertNewSchedule();
+		} else if (modalType === 0) {
+			removeEmployee();
+		}
+		/*try {
 			commands.createSchedule(selectedEmployee, date, newShiftTimeFrom, newShiftTimeTo).then( data => {
 				if (data !== null) {
 					console.log("Success!", data);
@@ -77,15 +96,32 @@
 			});
 		} catch (e) {
 			console.error(e);
-		}
+		}*/
+	}
+
+	function insertNewSchedule() {
+		commands.createSchedule(selectedEmployee, date, newShiftTimeFrom, newShiftTimeTo).then( data => {
+			if (data !== null) {
+				console.log("Success!", data);
+				toggleModal();
+				showSuccessAlert = !showSuccessAlert;
+			} else {
+				console.log("Error. Unable to insert data.");
+				showErrorAlert = !showErrorAlert;
+			}
+		}).catch(error => {
+			console.error("Error!", error);
+		});
 	}
 
 	function removeEmployee() {
 		try {
-			commands.removeSchedule(selectedEmployee, date, newShiftTimeFrom, newShiftTimeTo)
+			console.log(selectedEmployee.toString());
+			commands.removeSchedule(selectedEmployee.toString(), date)
 		} catch (error) {
 			console.error(error);
 		}
+		// TODO: Force page rerender.
 	}
 
 	function editEmployee() {
@@ -114,12 +150,14 @@
 	<!-- Modal body -->
 	<div class="modal-box">
 		<h3 class="font-bold text-lg">{title} Employee</h3>
+		<p>{date.toString()}</p>
 
 		<form id="modalForm" on:submit={handleSubmit}>
 			<div class="grid grid-cols-3">
 				<p class="flex items-center justify-center">Employee</p>
-				<select id="employeeSelection" class="select select-accent w-full max-w-xs col-span-2" bind:value={selectedEmployee} on:change={fillEmployeeAvailability}>
-					<option>Select Employee</option>
+				<select id="employeeSelection" class="select select-accent w-full max-w-xs col-span-2" bind:value={selectedEmployee} on:change={fillReadonlyFields}>
+<!--					<option>Select Employee</option>	Will throw TypeError.-->
+					<!-- TODO: Create separate logic for remove button when table is empty. -->
 					{#each employees as employee}
 						<option value="{employee.id}">{employee.users.firstname} {employee.users.surname}</option>
 					{/each}
@@ -173,8 +211,9 @@
 
 				<div class="grid grid-cols-3 gap-1">
 					<p class="flex items-center justify-center">Shift From</p>
+
 					<!-- TODO: Get time_from when selecting employee. -->
-					<input type="text" value="{employeeAvailability.preferred_time_from}" class="input input-bordered w-full max-w-xs" disabled />
+					<input type="text" value="{employeeSchedule.time_from}" class="input input-bordered w-full max-w-xs" disabled />
 				</div>
 
 				<div class="divider"></div>
@@ -182,7 +221,7 @@
 				<div class="grid grid-cols-3 gap-1">
 					<p class="flex items-center justify-center">Shift To</p>
 					<!-- TODO: Get time_to when selecting employee. -->
-					<input type="text" value="{employeeAvailability.preferred_time_from}" class="input input-bordered w-full max-w-xs" disabled />
+					<input type="text" value="{employeeSchedule.time_to}" class="input input-bordered w-full max-w-xs" disabled />
 				</div>
 			{/if}
 		</form>
@@ -193,5 +232,6 @@
 				<button class="btn btn-success" type="submit" form="modalForm" on:submit={handleSubmit}>Submit</button>
 			</form>
 		</div>
+
 	</div>
 </dialog>

@@ -23,13 +23,25 @@
 	/** @type {Date[]} */
 	let hours = generateHoursArray();
 
+	let combinedEmployeeSchedule = {};
 
-	let combinedEmployeeSchedule = employees.map((employee, index) => ({
-		emp_id: employee.id,
-		name: `${employee.users.firstname} ${employee.users.surname}`,
-		time_from: schedules[index].time_from,
-		time_to: schedules[index].time_to
-	}));
+	if (Object.entries(schedules).length !== 0) {
+		/*combinedEmployeeSchedule = employees.map((employee, index) => ({
+			emp_id: employee.id,
+			name: `${employee.users.firstname} ${employee.users.surname}`,
+			// Doesn't render if empty or Internal Error 500.
+			time_from: schedules[index].time_from,
+			time_to: schedules[index].time_to
+		}));*/
+
+		combinedEmployeeSchedule = schedules.map((schedule, index) => ({
+			emp_id: schedule.emp_id,
+			time_from: schedule.time_from,
+			time_to: schedule.time_to,
+			name: schedule.emp_id === employees[index].id ?
+				`${employees[index].users.firstname} ${employees[index].users.surname}` : ""
+			}));
+	}
 
 	/**
 	 * @param hour {Date}
@@ -91,7 +103,7 @@
 	<div class="grid grid-cols-2">
 		<h1 class="h1 font-bold">{day.toUpperCase()}</h1>
 		{#if action !== -1}
-			<Modal hours="{hours}" date="{date}" employees="{employees}" availabilities="{availabilities}" toggleModal="{closeModal}" modalType="{action}"/>
+			<Modal hours="{hours}" date="{date}" employees="{employees}" schedule="{schedules}" availabilities="{availabilities}" toggleModal="{closeModal}" modalType="{action}"/>
 		{/if}
 
 	</div>
@@ -118,20 +130,22 @@
 			</thead>
 
 			<tbody>
-			{#each combinedEmployeeSchedule as empSchedule}
-				<tr>
-					<td></td>
-					<td class="w-10 border-r-2 border-black">{empSchedule.name}</td>
+			{#if Object.entries(combinedEmployeeSchedule).length !== 0}
+				{#each combinedEmployeeSchedule as empSchedule}
+					<tr>
+						<td></td>
+						<td class="w-10 border-r-2 border-black">{empSchedule.name}</td>
 
-					{#each hours as hour}
-						{#if populateScheduleTable(hour, empSchedule) === true}
-							<td class="w-10 border-black bg-blue-300"></td>
-						{:else}
-							<td class="w-10 border-2 border-black"></td>
-						{/if}
-					{/each}
-				</tr>
-			{/each}
+						{#each hours as hour}
+							{#if populateScheduleTable(hour, empSchedule) === true}
+								<td class="w-10 border-black bg-blue-300"></td>
+							{:else}
+								<td class="w-10 border-2 border-black"></td>
+							{/if}
+						{/each}
+					</tr>
+				{/each}
+			{/if}
 		</table>
 	</div>
 

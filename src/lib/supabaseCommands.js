@@ -1,14 +1,12 @@
 import { supabase } from '$lib/supabaseClient.js';
 
-//TODO: Error handling.
-
 export async function getUsersAndNames() {
 	const { data, error } = await supabase.from("employees").select(`
 	id,
 	users(firstname, surname)|inner(id)`);
 
 	if (error) {
-		throw error;
+		console.error("Failed to fetch data: ", error);
 	}
 
 	return data;
@@ -61,12 +59,12 @@ export async function createSchedule(employee_id, schedule_date, schedule_time_f
 	return data;
 }
 
-export async function removeSchedule(employee_id, schedule_date, schedule_time_from, schedule_time_to) {
+export async function removeSchedule(employee_id, schedule_date) {
 	const { error } = await supabase.from("schedules").delete()
-		.eq("emp_id", employee_id)
-		.eq("date", schedule_date)
-		.eq("time_from", schedule_time_from)
-		.eq("time_to", schedule_time_to);
+		.match({
+			emp_id: employee_id,
+			date: schedule_date
+		});
 
 	if (error) {
 		return error;
