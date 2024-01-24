@@ -1,25 +1,41 @@
 <script>
 	import { addDays, endOfWeek, format, startOfWeek } from 'date-fns';
+	import * as supabaseCommands from '$lib/supabaseCommands.js';
 	import ManagerCard from '$lib/components/ManagerCard.svelte';
 
 	let d = new Date();
 	let start = format(startOfWeek(d, {weekStartsOn: 1}), "dd MMMM yyyy");
 	let end = format(endOfWeek(d, {weekStartsOn: 1}), "dd MMMM yyyy");
+
+	/** @type {string[]} */
 	let dates = [];
+
+	/** @type {number[]} */
+	let totalEmployees = [];
+
+	/** @type {{date: string, totalEmployees: number}[]} */
+	let combinedDateEmployeeCount = {};
+
 	generateDays();
+	getTotalEmployees();
+	combineDateAndCount();
 
 	function nextWeek() {
 		start = format(startOfWeek(d.setDate(d.getDate() + 7), {weekStartsOn: 1}), "dd MMMM yyyy");
 		end = format(endOfWeek(d.setDate(d.getDate()), {weekStartsOn: 1}), "dd MMMM yyyy");
 		dates = [];
+		totalEmployees = [];
 		generateDays();
+		getTotalEmployees();
 	}
 
 	function lastWeek() {
 		start = format(startOfWeek(d.setDate(d.getDate() - 7), {weekStartsOn: 1}), "dd MMMM yyyy");
 		end = format(endOfWeek(d.setDate(d.getDate()), {weekStartsOn: 1}), "dd MMMM yyyy");
 		dates = [];
+		totalEmployees = [];
 		generateDays();
+		getTotalEmployees();
 	}
 
 	function currentWeek() {
@@ -27,7 +43,9 @@
 		start = format(startOfWeek(new Date(), {weekStartsOn: 1}), "dd MMMM yyyy");
 		end = format(endOfWeek(new Date(), {weekStartsOn: 1}), "dd MMMM yyyy");
 		dates = [];
+		totalEmployees = [];
 		generateDays();
+		getTotalEmployees();
 	}
 
 	function generateDays() {
@@ -35,6 +53,30 @@
 			dates.push(format(addDays(start, i), "dd MMMM yyyy"));
 		}
 		// outputDates();
+	}
+
+	async function getTotalEmployees() {
+		//Get schedules and count.
+		for (let i = 0; i < dates.length; i++) {
+			let schedule = await supabaseCommands.getSchedules(dates[i]);
+			if (Object.entries(schedule).length === 0) {
+				totalEmployees.push(0);
+				// console.log(0);
+			} else {
+				// console.log(Object.entries(schedule).length);
+				totalEmployees.push(Object.entries(schedule).length);
+			}
+			// console.log(i);
+			// console.log(schedule);
+		}
+		combineDateAndCount();
+	}
+
+	function combineDateAndCount() {
+		combinedDateEmployeeCount = dates.map((date, index) => ({
+			date: date,
+			totalEmployees: totalEmployees[index]
+		}));
 	}
 
 	function outputDates() {
@@ -52,11 +94,12 @@
 	</div>
 	<button class="btn text-center" on:click={currentWeek}>Current Date</button>
 
-
-	{#each dates as day}
+	{#key combinedDateEmployeeCount}
+	{#each combinedDateEmployeeCount as dateAndCount}
 		<!-- Temporary until API made -->
-		<ManagerCard title="{format(day, 'EEEE').toLowerCase()}" total_employeess="{Math.floor(Math.random() * 10) === 0 ? 1 : Math.floor(Math.random() * 10)}" date="{format(day, 'yyyy-MM-dd')}"/>
+		<ManagerCard title="{format(dateAndCount.date, 'EEEE').toLowerCase()}" total_employees={dateAndCount.totalEmployees} date="{format(dateAndCount.date, 'yyyy-MM-dd')}"/>
 <!--		<p>{day}</p>
 		<p>{format(day, "yyyy-MM-dd")}</p>-->
 	{/each}
+	{/key}
 </div>

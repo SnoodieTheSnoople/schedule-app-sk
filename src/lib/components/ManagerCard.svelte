@@ -1,6 +1,5 @@
 <script>
 	import { goto } from '$app/navigation';
-	import { format } from 'date-fns';
 
 	/**
 	 * @type {string}
@@ -8,9 +7,9 @@
 	export let title;
 
 	/**
-	 * @type {string}
+	 * @type {number}
 	 */
-	export let total_employeess;
+	export let total_employees;
 
 	/**
 	 * @type {String}
@@ -30,19 +29,17 @@
 		</div>
 	</div>
 	<div class="col-span-7 grid grid-cols-2 justify-center items-center">
-		{#if total_employeess}
+		{#if total_employees}
 		<span class="pl-4">
-			<b>Total Employees:</b> {total_employeess}
+			<b>Total Employees:</b> {total_employees}
 		</span>
 		{:else}
 			<span class="col-span-2 text-center">
-				No schedule available for this day.
+				Nobody scheduled for this day.
 			</span>
 		{/if}
 	</div>
-	{#if total_employeess}
 		<div class="col-span-1 flex items-center justify-center">
 			<button class="btn bg-accent text-white" on:click={() => handleBtnClick()}>VIEW</button>
 		</div>
-	{/if}
 </div>

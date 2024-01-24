@@ -55,7 +55,6 @@
 	}*/
 
 	// TODO: Validation for when creating a new schedule. Ensure that the employee already is not scheduled for that day.
-	// TODO: Refresh and query db when successfully inserting data.
 
 	function createTitle() {
 		if (modalType === 1) return "Add";
@@ -130,7 +129,6 @@
 			console.error(error);
 		}
 		updateTable;
-		// TODO: Force page rerender.
 	}
 
 	function editEmployee() {
@@ -220,8 +218,6 @@
 
 				<div class="grid grid-cols-3 gap-1">
 					<p class="flex items-center justify-center">Shift From</p>
-
-					<!-- TODO: Get time_from when selecting employee. -->
 					<input type="text" value="{employeeSchedule.time_from}" class="input input-bordered w-full max-w-xs" disabled />
 				</div>
 
@@ -229,7 +225,6 @@
 
 				<div class="grid grid-cols-3 gap-1">
 					<p class="flex items-center justify-center">Shift To</p>
-					<!-- TODO: Get time_to when selecting employee. -->
 					<input type="text" value="{employeeSchedule.time_to}" class="input input-bordered w-full max-w-xs" disabled />
 				</div>
 			{/if}
