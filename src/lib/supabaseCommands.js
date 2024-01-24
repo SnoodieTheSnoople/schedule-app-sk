@@ -30,6 +30,11 @@ export async function getAvailabilities(arg) {
 	return data;
 }
 
+/**
+ *
+ * @param date {date}
+ * @returns {Promise<{emp_id: string, date: string, time_from: string, time_to: string}[]>}
+ */
 export async function getSchedules(date) {
 	const { data, error } = await supabase.from("schedules").select(`
 	emp_id,

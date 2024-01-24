@@ -14,10 +14,14 @@
 
 	export let availabilities;
 
+	/** @type {function(): void} */
 	export let toggleModal;
 
 	/** @type {number} */
 	export let modalType;
+
+	/** @type {function(): void} */
+	export let updateTable;
 
 	/** @type {string} */
 	let title = createTitle();
@@ -97,12 +101,14 @@
 		} catch (e) {
 			console.error(e);
 		}*/
+
 	}
 
 	function insertNewSchedule() {
 		commands.createSchedule(selectedEmployee, date, newShiftTimeFrom, newShiftTimeTo).then( data => {
 			if (data !== null) {
 				console.log("Success!", data);
+				updateTable();
 				toggleModal();
 				showSuccessAlert = !showSuccessAlert;
 			} else {
@@ -118,9 +124,12 @@
 		try {
 			console.log(selectedEmployee.toString());
 			commands.removeSchedule(selectedEmployee.toString(), date)
+			updateTable();
+			toggleModal();
 		} catch (error) {
 			console.error(error);
 		}
+		updateTable;
 		// TODO: Force page rerender.
 	}
 

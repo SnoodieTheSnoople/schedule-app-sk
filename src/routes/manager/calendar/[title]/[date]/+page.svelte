@@ -1,11 +1,13 @@
 <script>
 	import Modal from '$lib/components/Modal.svelte';
 	import { addHours, format, parse, startOfDay } from 'date-fns';
+	import * as supabaseCommands from '$lib/supabaseCommands.js';
 
 	export let data;
 
 	const employees = data.employees;
-	const schedules = data.schedules;
+
+	let schedules = data.schedules;
 	const availabilities = data.availabilities;
 
 	/** @type {string} */
@@ -24,23 +26,34 @@
 	let hours = generateHoursArray();
 
 	let combinedEmployeeSchedule = {};
+	combineEmployeeAndScheduleObjects();
 
-	if (Object.entries(schedules).length !== 0) {
-		/*combinedEmployeeSchedule = employees.map((employee, index) => ({
-			emp_id: employee.id,
-			name: `${employee.users.firstname} ${employee.users.surname}`,
-			// Doesn't render if empty or Internal Error 500.
-			time_from: schedules[index].time_from,
-			time_to: schedules[index].time_to
-		}));*/
+	function combineEmployeeAndScheduleObjects() {
+		if (Object.entries(schedules).length !== 0) {
+			/*combinedEmployeeSchedule = employees.map((employee, index) => ({
+				emp_id: employee.id,
+				name: `${employee.users.firstname} ${employee.users.surname}`,
+				// Doesn't render if empty or Internal Error 500.
+				time_from: schedules[index].time_from,
+				time_to: schedules[index].time_to
+			}));*/
 
-		combinedEmployeeSchedule = schedules.map((schedule, index) => ({
-			emp_id: schedule.emp_id,
-			time_from: schedule.time_from,
-			time_to: schedule.time_to,
-			name: schedule.emp_id === employees[index].id ?
-				`${employees[index].users.firstname} ${employees[index].users.surname}` : ""
+			combinedEmployeeSchedule = schedules.map((schedule, index) => ({
+				emp_id: schedule.emp_id,
+				time_from: schedule.time_from,
+				time_to: schedule.time_to,
+				name: schedule.emp_id === employees[index].id ?
+					`${employees[index].users.firstname} ${employees[index].users.surname}` : ""
 			}));
+		} else {
+			combinedEmployeeSchedule = {};
+		}
+	}
+
+	async function updateTable() {
+		schedules = await supabaseCommands.getSchedules(date);
+		combineEmployeeAndScheduleObjects();
+		// console.log(combinedEmployeeSchedule);
 	}
 
 	/**
@@ -103,7 +116,7 @@
 	<div class="grid grid-cols-2">
 		<h1 class="h1 font-bold">{day.toUpperCase()}</h1>
 		{#if action !== -1}
-			<Modal hours="{hours}" date="{date}" employees="{employees}" schedule="{schedules}" availabilities="{availabilities}" toggleModal="{closeModal}" modalType="{action}"/>
+			<Modal hours="{hours}" date="{date}" employees="{employees}" schedule="{schedules}" availabilities="{availabilities}" toggleModal="{closeModal}" modalType="{action}" updateTable="{updateTable}"/>
 		{/if}
 
 	</div>
@@ -130,6 +143,7 @@
 			</thead>
 
 			<tbody>
+			{#key combinedEmployeeSchedule}
 			{#if Object.entries(combinedEmployeeSchedule).length !== 0}
 				{#each combinedEmployeeSchedule as empSchedule}
 					<tr>
@@ -145,7 +159,10 @@
 						{/each}
 					</tr>
 				{/each}
+				{:else if Object.entries(combinedEmployeeSchedule).length !== 0}
+					<tr></tr>
 			{/if}
+			{/key}
 		</table>
 	</div>
 

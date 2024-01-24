@@ -35,7 +35,7 @@
 		for (let i = 0; i < 7; i++) {
 			dates.push(format(addDays(day, i), "dd MMMM yyyy"));
 		}
-		outputDates();
+		// outputDates();
 	}
 
 	function outputDates() {
