@@ -31,9 +31,8 @@
 	}
 
 	function generateDays() {
-		let day = start;
 		for (let i = 0; i < 7; i++) {
-			dates.push(format(addDays(day, i), "dd MMMM yyyy"));
+			dates.push(format(addDays(start, i), "dd MMMM yyyy"));
 		}
 		// outputDates();
 	}

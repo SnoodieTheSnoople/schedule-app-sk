@@ -159,7 +159,7 @@
 						{/each}
 					</tr>
 				{/each}
-				{:else if Object.entries(combinedEmployeeSchedule).length !== 0}
+				{:else if Object.entries(combinedEmployeeSchedule).length === 0}
 					<tr></tr>
 			{/if}
 			{/key}
