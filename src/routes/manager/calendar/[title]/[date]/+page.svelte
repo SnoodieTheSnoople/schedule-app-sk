@@ -124,6 +124,7 @@
 	<!-- Toggle Modal Button-->
 	<div>
 		{#if Object.entries(combinedEmployeeSchedule).length === 0}
+			<!-- TODO: Retrieve only employees that are scheduled for EDIT and REMOVE -->
 			<button class="btn btn-disabled text-white" on:click={ toggleRemoveModal }>Remove</button>
 			<button class="btn btn-disabled text-white" on:click={ toggleEditModal }>Edit</button>
 			{:else}
