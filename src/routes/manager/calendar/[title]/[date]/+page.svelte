@@ -123,8 +123,14 @@
 
 	<!-- Toggle Modal Button-->
 	<div>
-		<button class="btn btn-error text-white" on:click={ toggleRemoveModal }>Remove</button>
-		<button class="btn btn-info text-white" on:click={ toggleEditModal }>Edit</button>
+		{#if Object.entries(combinedEmployeeSchedule).length === 0}
+			<button class="btn btn-disabled text-white" on:click={ toggleRemoveModal }>Remove</button>
+			<button class="btn btn-disabled text-white" on:click={ toggleEditModal }>Edit</button>
+			{:else}
+			<button class="btn btn-error text-white" on:click={ toggleRemoveModal }>Remove</button>
+			<button class="btn btn-info text-white" on:click={ toggleEditModal }>Edit</button>
+		{/if}
+
 		<button class="btn btn-success text-white" on:click={ toggleAddModal }>Add</button>
 	</div>
 
