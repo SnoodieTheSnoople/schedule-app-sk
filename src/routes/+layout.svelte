@@ -1,17 +1,33 @@
 <script>
 	import '../app.pcss';
 	import { onMount } from 'svelte';
-	import { supabase } from '$lib/supabaseClient.js';
-	import { invalidateAll } from '$app/navigation';
+	import { invalidate, invalidateAll } from '$app/navigation';
 
-	onMount(() => {
-		const { data: {subscription }} = supabase.auth.onAuthStateChange(() => {
+	/*onMount(() => {
+		const { data: { subscription }} = supabase.auth.onAuthStateChange(() => {
 			invalidateAll();
-		});
+		})
 
 		return () => {
 			subscription.unsubscribe();
-		}
+		};
+	});*/
+
+	export let data;
+
+	let { supabase, session } = data;
+	$: ({ supabase, session } = data);
+
+	onMount(() => {
+		const {
+			data: { subscription },
+		} = supabase.auth.onAuthStateChange((event, _session) => {
+			if (_session?.expires_at !== session?.expires_at) {
+				invalidate('supabase:auth');
+			}
+		});
+
+		return () => subscription.unsubscribe();
 	})
 </script>
 
