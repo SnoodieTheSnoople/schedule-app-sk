@@ -22,6 +22,6 @@
 </script>
 
 <p>{data.session}</p>
-<p>{data.session?.user.email}</p>
+<p>{data.session?.user.email} | {data.session?.user.id}</p>
 <slot />
 

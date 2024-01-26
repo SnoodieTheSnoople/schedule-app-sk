@@ -21,6 +21,8 @@
 		start = format(startOfWeek(new Date(), {weekStartsOn: 1}), "dd MMMM yyyy");
 		end = format(endOfWeek(new Date(), {weekStartsOn: 1}), "dd MMMM yyyy");
 	}
+
+// 	TODO: Query DB and get schedule using the uuid.
 </script>
 
 <div class="mx-auto p-8 space-y-8 w-full h-full bg-white">
