@@ -1,17 +1,7 @@
 <script>
 	import '../app.pcss';
 	import { onMount } from 'svelte';
-	import { invalidate, invalidateAll } from '$app/navigation';
-
-	/*onMount(() => {
-		const { data: { subscription }} = supabase.auth.onAuthStateChange(() => {
-			invalidateAll();
-		})
-
-		return () => {
-			subscription.unsubscribe();
-		};
-	});*/
+	import { invalidate } from '$app/navigation';
 
 	export let data;
 
@@ -31,5 +21,7 @@
 	})
 </script>
 
+<p>{data.session}</p>
+<p>{data.session?.user.email}</p>
 <slot />
 

@@ -15,6 +15,10 @@
 		<ul class="menu p-4 w-40 min-h-full bg-accent text-base-content">
 			<!-- Sidebar content here -->
 			<li class="text-white"><a href="/login"><b>LOGIN</b></a></li>
+			<form action="/logout" method="POST">
+				<!--<li class="text-white"><a href="/logout"><b>SIGN OUT</b></a></li>-->
+				<button type="submit">SIGN OUT</button>
+			</form>
 			<li class="text-white"><a href="/employee/schedule"><b>SCHEDULE</b></a></li>
 			<li class="text-white"><a href="/employee/availability"><b>AVAILABILITY</b></a></li>
 			<li class="text-white"><a href="/employee/requests"><b>REQUESTS</b></a></li>
