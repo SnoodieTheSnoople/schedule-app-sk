@@ -2,6 +2,7 @@
 	import Card from '$lib/components/Card.svelte';
 	import { endOfWeek, format, startOfWeek } from 'date-fns';
 	import { getScheduleDateRange } from '$lib/supabaseCommands.js';
+	import Modal from '$lib/components/Modal.svelte';
 
 	export let data;
 
@@ -10,14 +11,18 @@
 
 	/** @type {Date} */
 	let d = new Date();
+	/** @type {string} */
 	let start = format(startOfWeek(d, {weekStartsOn: 1}), "dd MMMM yyyy");
+	/** @type {string} */
 	let end = format(endOfWeek(d, {weekStartsOn: 1}), "dd MMMM yyyy");
 
 	/** @type {Map<string, Object>} */
 	let combinedScheduleDates = new Map();
 
-	/** @type {string[]}*/
+	/** @type {string[]} */
 	let datesOfWeek = [];
+
+	let showModal = false;
 
 
 	// PAGE FUNCTIONS
@@ -45,9 +50,6 @@
 	}
 
 	function outputSchedule() {
-		/*schedule = getEmployeeSchedule().then((schedules) => {
-			console.log(schedules)
-		});*/
 		getEmployeeSchedule().then((schedules) => {
 			schedule = Array.isArray(schedules) ? schedules : Object.values(schedules);
 			console.log(schedules);
@@ -56,6 +58,10 @@
 			console.log(combinedScheduleDates);
 
 		});
+	}
+
+	function toggleModal() {
+		showModal = !showModal;
 	}
 
 
@@ -70,11 +76,6 @@
 	}
 
 	function combineScheduleAndDates() {
-		/*combinedScheduleDates.clear();
-		for (let i = 0; i < datesOfWeek.length; i++) {
-			let scheduleDate = schedule.find((s) => s.date === datesOfWeek[i]);
-			combinedScheduleDates.set(datesOfWeek[i], scheduleDate);
-		}*/
 		combinedScheduleDates = datesOfWeek.map((date) => {
 			let scheduleDate = schedule.find((s) => s.date === date);
 			return {date: date, schedule: scheduleDate || null};
@@ -104,6 +105,8 @@
 	}
 </script>
 
+<!-- TODO: Do modal. -->
+
 <div class="mx-auto p-8 space-y-8 w-full h-full bg-white">
 	<h1 class="h1 font-bold">SCHEDULE</h1>
 	<div class="grid grid-cols-3">
@@ -116,7 +119,7 @@
 	{#key combinedScheduleDates}
 		{#each combinedScheduleDates as csd}
 			{#if csd.schedule !== null}
-				<Card title={format(csd.date, "EEEE").toUpperCase()} left_content="{csd.schedule.time_from}" right_content="{csd.schedule.time_to}"/>
+				<Card title={format(csd.date, "EEEE").toUpperCase()} left_content="{csd.schedule.time_from}" right_content="{csd.schedule.time_to}" on:open={toggleModal}/>
 			{:else}
 				<Card title={format(csd.date, "EEEE").toUpperCase()} left_content="" right_content=""/>
 			{/if}

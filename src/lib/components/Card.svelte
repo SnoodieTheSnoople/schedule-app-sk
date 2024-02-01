@@ -1,4 +1,9 @@
 <script>
+
+	import { createEventDispatcher } from 'svelte';
+
+	const dispatch = createEventDispatcher();
+
 	/**
 	 * @type {string}
 	 */
@@ -13,6 +18,11 @@
 	 * @type {string}
 	 */
 	export let right_content;
+
+	function handleClick() {
+		console.log("clicked");
+		dispatch('open');
+	}
 </script>
 
 <div class="card w-full h-20 grid grid-cols-10 border-2 border-accent bg-base-100">
@@ -38,7 +48,7 @@
 	</div>
 	{#if left_content && right_content}
 	<div class="col-span-1 flex items-center justify-center">
-		<button class="btn bg-accent text-white">VIEW</button>
+		<button class="btn bg-accent text-white" on:click={handleClick}>VIEW</button>
 	</div>
 	{/if}
 </div>
