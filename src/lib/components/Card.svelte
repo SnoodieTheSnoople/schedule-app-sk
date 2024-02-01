@@ -22,7 +22,7 @@
 		</div>
 	</div>
 	<div class="col-span-7 grid grid-cols-2 justify-center items-center">
-		{#if left_content && right_content}
+		{#if left_content !== "" && right_content !== ""}
 		<span class="pl-4">
 			<b>Time Start:</b> {left_content}
 		</span>

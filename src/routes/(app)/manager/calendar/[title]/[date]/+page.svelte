@@ -116,7 +116,8 @@
 	<div class="grid grid-cols-2">
 		<h1 class="h1 font-bold">{day.toUpperCase()}</h1>
 		{#if action !== -1}
-			<Modal hours="{hours}" date="{date}" employees="{employees}" schedule="{schedules}" availabilities="{availabilities}" toggleModal="{closeModal}" modalType="{action}" updateTable="{updateTable}"/>
+			<Modal hours="{hours}" date="{date}" employees="{employees}" schedule="{schedules}" availabilities="{availabilities}"
+						 toggleModal="{closeModal}" modalType="{action}" updateTable="{updateTable}"/>
 		{/if}
 
 	</div>

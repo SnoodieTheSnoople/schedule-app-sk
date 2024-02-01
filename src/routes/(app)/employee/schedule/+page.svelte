@@ -6,11 +6,60 @@
 	export let data;
 
 	/** @type {Object[]} */
-	let schedule = {};
+	let schedule = [];
 
+	/** @type {Date} */
 	let d = new Date();
 	let start = format(startOfWeek(d, {weekStartsOn: 1}), "dd MMMM yyyy");
 	let end = format(endOfWeek(d, {weekStartsOn: 1}), "dd MMMM yyyy");
+
+	/** @type {Map<string, Object>} */
+	let combinedScheduleDates = new Map();
+
+	/** @type {string[]}*/
+	let datesOfWeek = [];
+
+
+	// PAGE FUNCTIONS
+
+	function nextWeek() {
+		start = format(startOfWeek(d.setDate(d.getDate() + 7), {weekStartsOn: 1}), "dd MMMM yyyy");
+		end = format(endOfWeek(d.setDate(d.getDate()), {weekStartsOn: 1}), "dd MMMM yyyy");
+		generateDays();
+		outputSchedule();
+	}
+
+	function lastWeek() {
+		start = format(startOfWeek(d.setDate(d.getDate() - 7), {weekStartsOn: 1}), "dd MMMM yyyy");
+		end = format(endOfWeek(d.setDate(d.getDate()), {weekStartsOn: 1}), "dd MMMM yyyy");
+		generateDays();
+		outputSchedule();
+	}
+
+	function currentWeek() {
+		d = new Date();
+		start = format(startOfWeek(new Date(), {weekStartsOn: 1}), "dd MMMM yyyy");
+		end = format(endOfWeek(new Date(), {weekStartsOn: 1}), "dd MMMM yyyy");
+		generateDays();
+		outputSchedule();
+	}
+
+	function outputSchedule() {
+		/*schedule = getEmployeeSchedule().then((schedules) => {
+			console.log(schedules)
+		});*/
+		getEmployeeSchedule().then((schedules) => {
+			schedule = Array.isArray(schedules) ? schedules : Object.values(schedules);
+			console.log(schedules);
+
+			combineScheduleAndDates();
+			console.log(combinedScheduleDates);
+
+		});
+	}
+
+
+	// DATA POPULATION
 
 	async function getEmployeeSchedule() {
 		//schedules = await getScheduleOnUUID(data.session?.user.id);
@@ -20,35 +69,37 @@
 		//return await getScheduleDateRange(data.session?.user.id, '2024-01-15', '2024-01-22');
 	}
 
-	function nextWeek() {
-		start = format(startOfWeek(d.setDate(d.getDate() + 7), {weekStartsOn: 1}), "dd MMMM yyyy");
-		end = format(endOfWeek(d.setDate(d.getDate()), {weekStartsOn: 1}), "dd MMMM yyyy");
-		outputSchedule();
-	}
-
-	function lastWeek() {
-		start = format(startOfWeek(d.setDate(d.getDate() - 7), {weekStartsOn: 1}), "dd MMMM yyyy");
-		end = format(endOfWeek(d.setDate(d.getDate()), {weekStartsOn: 1}), "dd MMMM yyyy");
-		outputSchedule();
-	}
-
-	function currentWeek() {
-		d = new Date();
-		start = format(startOfWeek(new Date(), {weekStartsOn: 1}), "dd MMMM yyyy");
-		end = format(endOfWeek(new Date(), {weekStartsOn: 1}), "dd MMMM yyyy");
-		outputSchedule();
-	}
-
-	function outputSchedule() {
-		schedule = getEmployeeSchedule().then((schedules) => {
-			console.log(schedules)
+	function combineScheduleAndDates() {
+		/*combinedScheduleDates.clear();
+		for (let i = 0; i < datesOfWeek.length; i++) {
+			let scheduleDate = schedule.find((s) => s.date === datesOfWeek[i]);
+			combinedScheduleDates.set(datesOfWeek[i], scheduleDate);
+		}*/
+		combinedScheduleDates = datesOfWeek.map((date) => {
+			let scheduleDate = schedule.find((s) => s.date === date);
+			return {date: date, schedule: scheduleDate || null};
 		});
 	}
 
-	// Upon page load.
+	function generateDays() {
+		datesOfWeek = [];
+		for (let i = 0; i < 7; i++) {
+			let tmpDate = new Date(start);
+			datesOfWeek.push(format(tmpDate.setDate(tmpDate.getDate() + i), "yyyy-MM-dd"));
+		}
+		console.log(datesOfWeek);
+	}
+
+
+	generateDays();
+	console.log(datesOfWeek);
 	if (data.session) {
-		schedule = getEmployeeSchedule().then((schedules) => {
+		getEmployeeSchedule().then((schedules) => {
+			schedule = Array.isArray(schedules) ? schedules : Object.values(schedules);
 			console.log(schedules);
+
+			combineScheduleAndDates();
+			console.log(combinedScheduleDates);
 		});
 	}
 </script>
@@ -62,13 +113,14 @@
 	</div>
 	<button class="btn text-center" on:click={currentWeek}>Current Date</button>
 
-	<!-- TODO: Iterate through collection of schedule and generate card data.
-	For title use date format(date, 'dddd' or 'EEEE').toUpperCase() -->
-	<Card title="MONDAY"/>
-	<Card title="TUESDAY"/>
-	<Card title="WEDNESDAY"/>
-	<Card title="THURSDAY" left_content="13:00" right_content="20:00"/>
-	<Card title="FRIDAY" left_content="13:00" right_content="20:00"/>
-	<Card title="SATURDAY" left_content="13:00" right_content="20:00"/>
-	<Card title="SUNDAY" left_content="13:00" right_content="20:00"/>
+	{#key combinedScheduleDates}
+		{#each combinedScheduleDates as csd}
+			{#if csd.schedule !== null}
+				<Card title={format(csd.date, "EEEE").toUpperCase()} left_content="{csd.schedule.time_from}" right_content="{csd.schedule.time_to}"/>
+			{:else}
+				<Card title={format(csd.date, "EEEE").toUpperCase()} left_content="" right_content=""/>
+			{/if}
+		{/each}
+	{/key}
+
 </div>
