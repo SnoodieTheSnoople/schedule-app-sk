@@ -101,6 +101,14 @@ export async function removeSchedule(employee_id, schedule_date) {
 	}
 }
 
+
+/**
+ *
+ * @param uuid {string}
+ * @param start {string}
+ * @param end {string}
+ * @return {Promise<emp_id: string, date: string, time_from: string, time_to: string>[]}
+ */
 export async function getScheduleDateRange(uuid, start, end) {
 	const { data, error } = await supabase.from("schedules").select(`
 	emp_id,

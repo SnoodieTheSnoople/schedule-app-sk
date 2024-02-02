@@ -19,6 +19,7 @@
 	 */
 	export let right_content;
 
+	/** @type {{title: string, left_content: string, right_content: string}} */
 	let cardData = {
 		title: title,
 		left_content: left_content,
@@ -26,8 +27,13 @@
 	}
 
 	function handleClick() {
-		console.log("clicked");
+		// console.log("clicked");
 		dispatch('open', cardData);
+		/*dispatch('open', {
+			title: title,
+			left_content: left_content,
+			right_content: right_content
+		});*/
 	}
 </script>
 

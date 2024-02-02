@@ -3,6 +3,7 @@
 	/** @type {function(): void}*/
 	export let toggleModal;
 
+	/** @type {{title: string, left_content: string, right_content: string}} */
 	export let modalData;
 
 	/** @type {boolean} */
@@ -17,24 +18,6 @@
 		<h3 class="font-bold text-lg">{modalData.title}</h3>
 
 		<div class="divider"></div>
-
-		<!--<div>
-			<p class="flex items-center justify-center">Time Block</p>
-		</div>
-
-		<div class="grid grid-cols-3 gap-1">
-			<p class="flex items-center justify-center">Shift From</p>
-			<input type="text" value="{modalData.left_content}"
-			class="input input-bordered w-full max-w-xs" disabled/>
-		</div>
-
-		<div class="divider"></div>
-
-		<div class="grid grid-cols-3 gap-1">
-			<p class="flex items-center justify-center">Shift To</p>
-			<input type="text" value="{modalData.right_content}"
-						 class="input input-bordered w-full max-w-xs" disabled/>
-		</div>-->
 
 		<div class="grid grid-cols-3 gap-1">
 			<p class="flex items-center justify-center">Time Block</p>

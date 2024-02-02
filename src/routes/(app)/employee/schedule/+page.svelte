@@ -25,7 +25,8 @@
 	/** @type {boolean} */
 	let showModal = false;
 
-	let modalData = null;
+	/** @type {{title: string, left_content: string, right_content: string}} */
+	let modalData = {title: '', left_content: '', right_content: ''}
 
 
 	// PAGE FUNCTIONS
@@ -55,19 +56,22 @@
 	function outputSchedule() {
 		getEmployeeSchedule().then((schedules) => {
 			schedule = Array.isArray(schedules) ? schedules : Object.values(schedules);
-			console.log(schedules);
+			// console.log(schedules);
 
 			combineScheduleAndDates();
-			console.log(combinedScheduleDates);
+			// console.log(combinedScheduleDates);
 
 		});
 	}
 
+	/** @param {CustomEvent} event
+	 * @return void
+	 * */
 	function toggleModal(event) {
 		showModal = !showModal;
-		console.log(showModal);
+		// console.log(showModal);
 		modalData = event.detail;
-		console.log(event.detail);
+		// console.log(event.detail);
 	}
 
 
@@ -78,7 +82,7 @@
 		console.log(data.session?.user.id);
 		//return await getScheduleOnUUID(data.session?.user.id);
 		return await getScheduleDateRange(data.session?.user.id, format(start, 'yyyy-MM-dd'), format(end, 'yyyy-MM-dd'));
-		//return await getScheduleDateRange(data.session?.user.id, '2024-01-15', '2024-01-22');
+
 	}
 
 	function combineScheduleAndDates() {
@@ -111,8 +115,6 @@
 	}
 </script>
 
-<!-- TODO: Do modal. -->
-
 <div class="mx-auto p-8 space-y-8 w-full h-full bg-white">
 	<div class="grid grid-cols-2">
 		<h1 class="h1 font-bold">SCHEDULE</h1>
@@ -138,5 +140,4 @@
 			{/if}
 		{/each}
 	{/key}
-
 </div>

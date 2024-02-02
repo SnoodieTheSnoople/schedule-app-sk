@@ -96,7 +96,6 @@
 
 	{#key combinedDateEmployeeCount}
 		{#each combinedDateEmployeeCount as dateAndCount}
-			<!-- Temporary until API made -->
 			<ManagerCard title="{format(dateAndCount.date, 'EEEE').toLowerCase()}" total_employees={dateAndCount.totalEmployees} date="{format(dateAndCount.date, 'yyyy-MM-dd')}"/>
 	<!--		<p>{day}</p>
 			<p>{format(day, "yyyy-MM-dd")}</p>-->
