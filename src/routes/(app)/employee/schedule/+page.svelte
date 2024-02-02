@@ -2,7 +2,7 @@
 	import Card from '$lib/components/Card.svelte';
 	import { endOfWeek, format, startOfWeek } from 'date-fns';
 	import { getScheduleDateRange } from '$lib/supabaseCommands.js';
-	import Modal from '$lib/components/Modal.svelte';
+	import ScheduleModal from '$lib/components/ScheduleModal.svelte';
 
 	export let data;
 
@@ -22,7 +22,10 @@
 	/** @type {string[]} */
 	let datesOfWeek = [];
 
+	/** @type {boolean} */
 	let showModal = false;
+
+	let modalData = null;
 
 
 	// PAGE FUNCTIONS
@@ -60,8 +63,11 @@
 		});
 	}
 
-	function toggleModal() {
+	function toggleModal(event) {
 		showModal = !showModal;
+		console.log(showModal);
+		modalData = event.detail;
+		console.log(event.detail);
 	}
 
 
@@ -108,7 +114,13 @@
 <!-- TODO: Do modal. -->
 
 <div class="mx-auto p-8 space-y-8 w-full h-full bg-white">
-	<h1 class="h1 font-bold">SCHEDULE</h1>
+	<div class="grid grid-cols-2">
+		<h1 class="h1 font-bold">SCHEDULE</h1>
+		{#if showModal === true}
+			<ScheduleModal toggleModal={toggleModal} modalData={modalData}/>
+		{/if}
+	</div>
+
 	<div class="grid grid-cols-3">
 		<button class="btn text-end" on:click={lastWeek}>L</button>
 		<p class="text-center">{start} - {end}</p>
@@ -119,7 +131,8 @@
 	{#key combinedScheduleDates}
 		{#each combinedScheduleDates as csd}
 			{#if csd.schedule !== null}
-				<Card title={format(csd.date, "EEEE").toUpperCase()} left_content="{csd.schedule.time_from}" right_content="{csd.schedule.time_to}" on:open={toggleModal}/>
+				<Card title={format(csd.date, "EEEE").toUpperCase()} left_content="{csd.schedule.time_from}"
+							right_content="{csd.schedule.time_to}" on:open={toggleModal}/>
 			{:else}
 				<Card title={format(csd.date, "EEEE").toUpperCase()} left_content="" right_content=""/>
 			{/if}

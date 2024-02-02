@@ -19,9 +19,15 @@
 	 */
 	export let right_content;
 
+	let cardData = {
+		title: title,
+		left_content: left_content,
+		right_content: right_content
+	}
+
 	function handleClick() {
 		console.log("clicked");
-		dispatch('open');
+		dispatch('open', cardData);
 	}
 </script>
 
