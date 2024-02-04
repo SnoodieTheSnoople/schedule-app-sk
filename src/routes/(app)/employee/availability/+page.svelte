@@ -1,5 +1,15 @@
 <script>
-import SecondaryCard from '$lib/components/SecondaryCard.svelte';
+	import SecondaryCard from '$lib/components/SecondaryCard.svelte';
+
+	function getAvailabilty()
+	{
+
+	}
+
+//  TODO: Get availability based on user id.
+// 	TODO: Redirect to availability page when pressing button from SecondaryCard.
+// 	TODO: Create manager view for availability.
+
 </script>
 
 <div class="mx-auto p-8 space-y-8 w-full h-full bg-white">
