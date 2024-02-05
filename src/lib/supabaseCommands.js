@@ -41,6 +41,22 @@ export async function getAvailabilities(arg) {
 	return data;
 }
 
+export async function getAvailabilityOnUUID(uuid) {
+	const { data, error } = await supabase.from("availabilities").select(`
+	day,
+	available_time_from,
+	available_time_to,
+	preferred_time_from,
+	preferred_time_to`).eq('emp_id', uuid);
+
+	if (error) {
+		console.error("Failed to fetch data: ", error);
+	}
+
+	return data;
+
+}
+
 /**
  *
  * @param date {date}
