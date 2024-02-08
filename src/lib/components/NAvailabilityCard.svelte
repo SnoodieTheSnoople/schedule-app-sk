@@ -16,6 +16,8 @@
 	/** @type {string} */
 	export let bottom_content;
 
+
+
 	function handleClick() {
 		dispatch('click', {
 			title
