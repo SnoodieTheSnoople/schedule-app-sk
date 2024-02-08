@@ -41,6 +41,7 @@
 
 <div class="mx-auto p-8 space-y-8 w-full h-full bg-white">
 	<h1 class="h1 font-bold">AVAILABILITY</h1>
+	<!-- TODO: Button to redirect. -->
 	<button class="btn btn-primary">New Availability</button>
 
 
