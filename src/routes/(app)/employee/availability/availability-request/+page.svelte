@@ -1,6 +1,7 @@
 <script>
 
 	import NAvailabilityCard from '$lib/components/NAvailabilityCard.svelte';
+	import NAvailabilityModal from '$lib/components/NAvailabilityModal.svelte';
 
 	export let data;
 
@@ -20,13 +21,16 @@
 </script>
 
 <div class="mx-auto p-8 space-y-8 w-full h-full bg-white">
-	<h1 class="h1 font-bold">NEW AVAILABILITY</h1>
 
-	{#if showModal}
-		
-	{/if}
+	<div>
+		<h1 class="h1 font-bold">NEW AVAILABILITY</h1>
+
+		{#if showModal}
+			<NAvailabilityModal toggleModal={toggleModal} modalData={modalData}/>
+		{/if}
+	</div>
 
 	{#each days as day}
-		<NAvailabilityCard title="{day.toUpperCase()}" left_content="" right_content="" bottom_content=""/>
+		<NAvailabilityCard title="{day.toUpperCase()}" left_content="" right_content="" bottom_content="" on:click={toggleModal}/>
 	{/each}
 </div>
