@@ -1,6 +1,7 @@
 <script>
 	import SecondaryCard from '$lib/components/SecondaryCard.svelte';
 	import { getAvailabilityOnUUID } from '$lib/supabaseCommands.js';
+	import { goto } from '$app/navigation';
 
 	export let data;
 
@@ -25,6 +26,10 @@
 		});
 	}
 
+	function handleClick() {
+		goto('./availability/availability-request');
+	}
+
 	if (data.session) {
 		getAvailabilty().then((a) => {
 			availability = Array.isArray(a) ? a : Object.values(a);
@@ -42,7 +47,7 @@
 <div class="mx-auto p-8 space-y-8 w-full h-full bg-white">
 	<h1 class="h1 font-bold">AVAILABILITY</h1>
 	<!-- TODO: Button to redirect. -->
-	<button class="btn btn-primary">New Availability</button>
+	<button class="btn btn-primary" on:click={handleClick}>New Availability</button>
 
 
 	{#each daysWithAvailability as dwa}
