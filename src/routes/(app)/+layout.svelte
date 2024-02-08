@@ -28,6 +28,7 @@
 			<li class="text-white"><a href="/employee/requests"><b>REQUESTS</b></a></li>
 			<li class="text-white"><a href="/employee/shift-swap"><b>SHIFT SWAP</b></a></li>
 			<li class="text-white"><a href="/manager/calendar"><b>CALENDAR</b></a></li>
+			<li class="text-white"><a href="/manager/availability"><b>AVAILABILITY REQUESTS</b></a></li>
 		</ul>
 
 	</div>
