@@ -5,6 +5,8 @@
 
 	export let data;
 
+	let uuid = data.session?.user.id;
+
 	/** @type {string[]} */
 	const days = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'];
 
@@ -26,7 +28,7 @@
 		<h1 class="h1 font-bold">NEW AVAILABILITY</h1>
 
 		{#if showModal}
-			<NAvailabilityModal toggleModal={toggleModal} modalData={modalData}/>
+			<NAvailabilityModal toggleModal={toggleModal} modalData={modalData} uuid={uuid}/>
 		{/if}
 	</div>
 

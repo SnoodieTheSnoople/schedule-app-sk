@@ -1,5 +1,5 @@
 <script>
-
+	import { createAvailability, getManagers, createMAL } from '$lib/supabaseCommands.js';
 	import { addHours, format, startOfDay } from 'date-fns';
 
 	/** @type {function(): void}*/
@@ -7,6 +7,9 @@
 
 	/** @type {{title: string}} */
 	export let modalData;
+
+	/** @type {string} */
+	export let uuid;
 
 	/** @type {boolean} */
 	let isOpen = true;
@@ -21,10 +24,10 @@
 	let availableTimeTo= "";
 
 	/** @type {string} */
-	let preferredShiftFrom= "";
+	let preferredShiftFrom = null;
 
 	/** @type {string} */
-	let preferredShiftTo= "";
+	let preferredShiftTo = null;
 
 
 	function generateHoursArray() {
@@ -39,11 +42,25 @@
 	}
 
 	function handleSubmit() {
-		console.log('submit');
+		/*console.log('submit');
 		console.log(availableTimeFrom);
 		console.log(availableTimeTo);
 		console.log(preferredShiftFrom);
-		console.log(preferredShiftTo);
+		console.log(preferredShiftTo);*/
+		createAvailability(uuid, modalData.title.toLowerCase(), availableTimeFrom, availableTimeTo,
+			preferredShiftFrom, preferredShiftTo).then((availabilityData) => {
+				console.log(availabilityData);
+
+				getManagers().then((managerData) => {
+					console.log(managerData);
+
+					managerData.forEach((manager) => {
+						createMAL(manager.id, availabilityData[0].id, 0).then((data) => {
+							console.log(data);
+						});
+					});
+				});
+		});
 	}
 
 </script>

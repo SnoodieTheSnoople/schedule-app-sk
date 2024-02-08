@@ -15,8 +15,10 @@
 	/** @type {Object[]} */
 	let daysWithAvailability = new Map();
 
-	async function getAvailabilty() {
+	async function getAvailability() {
 		return await getAvailabilityOnUUID(data.session?.user.id);
+		// Had to modify getAvailabilityOnUUID to return the object where the
+		// status is equal to 1 which means it is active and accepted.
 	}
 
 	function combineAvailabilityAndDays() {
@@ -31,7 +33,7 @@
 	}
 
 	if (data.session) {
-		getAvailabilty().then((a) => {
+		getAvailability().then((a) => {
 			availability = Array.isArray(a) ? a : Object.values(a);
 			console.log(availability);
 			combineAvailabilityAndDays();
@@ -39,7 +41,6 @@
 		console.log(daysWithAvailability);
 	}
 
-// 	TODO: Redirect to availability page when pressing button from SecondaryCard.
 // 	TODO: Create manager view for availability.
 
 </script>

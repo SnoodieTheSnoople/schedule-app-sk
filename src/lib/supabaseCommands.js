@@ -23,6 +23,17 @@ export async function getUsersAndNames() {
 	return data;
 }
 
+export async function getManagers() {
+	const { data, error } = await supabase.from("manager").select(`
+	id`);
+
+	if (error) {
+		console.error("Failed to fetch data: ", error);
+	}
+
+	return data;
+}
+
 
 export async function getAvailabilities(arg) {
 	const { data, error } = await supabase.from("availabilities").select( `
@@ -42,15 +53,56 @@ export async function getAvailabilities(arg) {
 }
 
 export async function getAvailabilityOnUUID(uuid) {
+	/*const { data, error } = await supabase.from("availabilities").select(`
+	day,
+	available_time_from,
+	available_time_to,
+	preferred_time_from,
+	preferred_time_to`).eq('emp_id', uuid);*/
+
 	const { data, error } = await supabase.from("availabilities").select(`
 	day,
 	available_time_from,
 	available_time_to,
 	preferred_time_from,
-	preferred_time_to`).eq('emp_id', uuid);
+	preferred_time_to,
+	manager_availability_link!inner(status)`).eq('emp_id', uuid)
+		.eq('manager_availability_link.status', '1');
+
 
 	if (error) {
 		console.error("Failed to fetch data: ", error);
+	}
+
+	return data;
+}
+
+export async function createAvailability(employee_id, day, available_time_from, available_time_to, preferred_time_from, preferred_time_to) {
+	const { data, error } = await supabase.from("availabilities").insert({
+		emp_id: employee_id,
+		day: day,
+		available_time_from: available_time_from,
+		available_time_to: available_time_to,
+		preferred_time_from: preferred_time_from,
+		preferred_time_to: preferred_time_to
+	}).select();
+
+	if (error) {
+		console.error("Failed to insert data: ", error);
+	}
+
+	return data;
+}
+
+export async function createMAL(manager_id, availability_id, status) {
+	const { data, error } = await supabase.from("manager_availability_link").insert({
+		manager_id: manager_id,
+		availability_id: availability_id,
+		status: status
+	}).select();
+
+	if (error) {
+		console.error("Failed to insert data: ", error);
 	}
 
 	return data;
