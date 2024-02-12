@@ -77,6 +77,35 @@ export async function getAvailabilityOnUUID(uuid) {
 	return data;
 }
 
+export async function getMALByStatus() {
+	const { data, error } = await supabase.from("manager_availability_link").select(`
+	manager_id,
+	availability_id,
+	status,
+	availabilities!inner(emp_id)`).eq('status', '0');
+
+	if (error) {
+		console.error("Failed to fetch data: ", error);
+	} else {
+		return data.reduce((employeeRequests, currentValue) => {
+			const empId = currentValue.availabilities.emp_id;
+
+			if (!employeeRequests[empId]) {
+				employeeRequests[empId] = [];
+			}
+
+			employeeRequests[empId].push({
+				manager_id: currentValue.manager_id,
+				availability_id: currentValue.availability_id,
+				status: currentValue.status,
+				emp_id: empId
+			});
+
+			return employeeRequests;
+		}, {});
+	}
+}
+
 export async function createAvailability(employee_id, day, available_time_from, available_time_to, preferred_time_from, preferred_time_to) {
 	const { data, error } = await supabase.from("availabilities").insert({
 		emp_id: employee_id,
