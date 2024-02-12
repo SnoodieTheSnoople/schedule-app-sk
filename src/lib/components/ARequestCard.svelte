@@ -1,9 +1,20 @@
 <script>
+
 	/** @type {string} */
 	export let username
 
+	/** @type {Object[]} */
+	export let empDataRequest;
+
 	/** @type {string[]} */
-	export let availableDays;
+	let availableDays = [];
+
+	empDataRequest.forEach(request => {
+		console.log(request.day);
+		availableDays.push(request.day.charAt(0).toUpperCase() + request.day.slice(1));
+	});
+
+	console.log(availableDays);
 
 </script>
 
@@ -14,7 +25,7 @@
 		</div>
 		<div class="col-span-9 pl-4 pt-2 w-full">
 			<span class="">
-				<b>Available Days: </b> {availableDays}
+				<b>Available Days: </b> {availableDays.join(', ')}
 			</span>
 		</div>
 	</div>

@@ -82,7 +82,7 @@ export async function getMALByStatus() {
 	manager_id,
 	availability_id,
 	status,
-	availabilities!inner(emp_id)`).eq('status', '0');
+	availabilities!inner(emp_id, day)`).eq('status', '0');
 
 	if (error) {
 		console.error("Failed to fetch data: ", error);
@@ -98,7 +98,8 @@ export async function getMALByStatus() {
 				manager_id: currentValue.manager_id,
 				availability_id: currentValue.availability_id,
 				status: currentValue.status,
-				emp_id: empId
+				emp_id: empId,
+				day: currentValue.availabilities.day
 			});
 
 			return employeeRequests;
