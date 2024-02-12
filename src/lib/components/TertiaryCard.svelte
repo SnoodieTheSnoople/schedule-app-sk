@@ -20,7 +20,7 @@
 	export let status;
 
 	/**
-	 * @type {number}
+	 * @type {string}
 	 */
 	export let totalHours;
 </script>
