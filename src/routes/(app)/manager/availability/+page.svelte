@@ -2,7 +2,6 @@
 	import ARequestCard from '$lib/components/ARequestCard.svelte';
 	import { getMALByStatus } from '$lib/supabaseCommands.js';
 
-	let availableDays = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday']
 	let requests = {};
 
 	async function getRequests() {

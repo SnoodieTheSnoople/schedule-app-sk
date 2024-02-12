@@ -8,6 +8,10 @@
 
 	/** @type {string[]} */
 	let availableDays = [];
+	
+	function handleBtnClick() {
+		console.log('Button clicked');
+	}
 
 	empDataRequest.forEach(request => {
 		console.log(request.day);
@@ -30,6 +34,6 @@
 		</div>
 	</div>
 	<div class="col-span-1 row-span-2 flex items-center justify-center">
-		<button class="btn btn-primary">VIEW</button>
+		<button class="btn btn-primary" on:click={handleBtnClick}>VIEW</button>
 	</div>
 </div>
