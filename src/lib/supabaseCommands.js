@@ -23,6 +23,16 @@ export async function getUsersAndNames() {
 	return data;
 }
 
+export async function getUserByUUID(uuid) {
+	const { data, error } = await supabase.from("users").select('*').eq('id', uuid);
+
+	if (error) {
+		console.error("Failed to fetch data: ", error);
+	}
+
+	return data;
+}
+
 export async function getManagers() {
 	const { data, error } = await supabase.from("manager").select(`
 	id`);
@@ -105,6 +115,20 @@ export async function getMALByStatus() {
 			return employeeRequests;
 		}, {});
 	}
+}
+
+export async function getMALByStatusAndUUID(uuid) {
+	const { data, error } = await supabase.from("manager_availability_link").select(`
+	manager_id,
+	availability_id,
+	status,
+	availabilities!inner(emp_id, day)`).eq('status', '0')
+		.eq('availabilities.emp_id', uuid);
+
+	if (error) {
+		console.error("Failed to fetch data: ", error);
+	}
+	return data;
 }
 
 export async function createAvailability(employee_id, day, available_time_from, available_time_to, preferred_time_from, preferred_time_to) {

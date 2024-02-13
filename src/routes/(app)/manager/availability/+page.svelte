@@ -8,6 +8,10 @@
 		return getMALByStatus();
 	}
 
+	function getData() {
+		console.log()
+	}
+
 	getRequests().then((req) => {
 		requests = req;
 		console.log(requests);
@@ -18,6 +22,6 @@
 	<h1 class="h1 font-bold">AVAILABILITY REQUESTS</h1>
 
 	{#each Object.entries(requests) as [username, request]}
-		<ARequestCard username={username} empDataRequest={request} />
+		<ARequestCard username={username} empDataRequest={request} on:view={getData}/>
 	{/each}
 </div>

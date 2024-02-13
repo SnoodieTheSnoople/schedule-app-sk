@@ -1,4 +1,5 @@
 <script>
+	import { goto } from '$app/navigation';
 
 	/** @type {string} */
 	export let username
@@ -11,6 +12,7 @@
 	
 	function handleBtnClick() {
 		console.log('Button clicked');
+		goto(`availability/${username}`);
 	}
 
 	empDataRequest.forEach(request => {
@@ -19,7 +21,7 @@
 	});
 
 	console.log(availableDays);
-
+	console.log(username);
 </script>
 
 <div class="card w-full h-24 grid grid-cols-10 grid-rows-2 border-2 border-accent bg-base-100">
