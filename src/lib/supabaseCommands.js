@@ -87,6 +87,21 @@ export async function getAvailabilityOnUUID(uuid) {
 	return data;
 }
 
+export async function createMAL(manager_id, availability_id, status) {
+	const { data, error } = await supabase.from("manager_availability_link").insert({
+		manager_id: manager_id,
+		availability_id: availability_id,
+		status: status
+	}).select();
+
+	if (error) {
+		console.error("Failed to insert data: ", error);
+	}
+
+	return data;
+
+}
+
 export async function getMALByStatus() {
 	const { data, error } = await supabase.from("manager_availability_link").select(`
 	manager_id,
@@ -117,12 +132,18 @@ export async function getMALByStatus() {
 	}
 }
 
+/**
+ *
+ * @param uuid {string}
+ * @return {Promise<{manager_id: string, availabilitiy_id: string, status: string, availabilties: {emp_id: string, day: string, available_time_from: string,
+ * available_time_to: string, preferred_time_from: string, preferred_time_to: string}}>}
+ */
 export async function getMALByStatusAndUUID(uuid) {
 	const { data, error } = await supabase.from("manager_availability_link").select(`
 	manager_id,
 	availability_id,
 	status,
-	availabilities!inner(emp_id, day)`).eq('status', '0')
+	availabilities!inner(emp_id, day, available_time_from, available_time_to, preferred_time_from, preferred_time_to)`).eq('status', '0')
 		.eq('availabilities.emp_id', uuid);
 
 	if (error) {
@@ -146,21 +167,6 @@ export async function createAvailability(employee_id, day, available_time_from, 
 	}
 
 	return data;
-}
-
-export async function createMAL(manager_id, availability_id, status) {
-	const { data, error } = await supabase.from("manager_availability_link").insert({
-		manager_id: manager_id,
-		availability_id: availability_id,
-		status: status
-	}).select();
-
-	if (error) {
-		console.error("Failed to insert data: ", error);
-	}
-
-	return data;
-
 }
 
 /**
