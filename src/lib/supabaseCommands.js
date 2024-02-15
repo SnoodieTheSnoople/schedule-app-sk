@@ -189,7 +189,7 @@ export async function acceptMAL(availability_id) {
 }
 // And then remove the existing availability in MAL. Query active availability with status = 1. Then delete the availability with the same availability_id.
 
-export async function declineMAL(mal_id) {
+export async function removeMAL(mal_id) {
 	const { error } = await supabase.from("manager_availability_link").delete().eq('mal_id', mal_id);
 
 	if (error) {

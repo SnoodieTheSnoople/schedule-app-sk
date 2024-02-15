@@ -1,5 +1,5 @@
 <script>
-	import { getMALByStatusAndUUID, getUserByUUID, acceptMAL, getActiveMALStatus, removeAvailability } from '$lib/supabaseCommands.js';
+	import { getMALByStatusAndUUID, getUserByUUID, acceptMAL, getActiveMALStatus, removeAvailability, removeMAL } from '$lib/supabaseCommands.js';
 	import SecondaryCard from '$lib/components/SecondaryCard.svelte';
 	import { goto } from '$app/navigation';
 
@@ -71,11 +71,26 @@
 			} catch (error) {
 				console.log(error);
 			}
+
 		} else {
 			console.log("denied");
 			// Iterate and remove all requests.
 			// Iterate and remove all availabilities.
 			// Redirect to manager/availability page.
+			try {
+				for (const request of availabilityRequest) {
+					console.log("Availability Request:");
+					console.log(request);
+					console.log(request.availability_id);
+					await removeMAL(request.availability_id);
+					await removeAvailability(request.availability_id);
+				}
+
+				goto("/manager/availability");
+
+			} catch (error) {
+				console.log(error);
+			}
 		}
 	}
 
