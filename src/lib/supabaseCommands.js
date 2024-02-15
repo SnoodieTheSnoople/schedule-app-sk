@@ -87,6 +87,16 @@ export async function getAvailabilityOnUUID(uuid) {
 	return data;
 }
 
+export async function removeAvailability(availability_id) {
+	const { error } = await supabase.from("availabilities").delete()
+		.eq('id', availability_id);
+
+	if (error) {
+		console.error("Failed to delete data: ", error);
+		return error;
+	}
+}
+
 export async function createMAL(manager_id, availability_id, status) {
 	const { data, error } = await supabase.from("manager_availability_link").insert({
 		manager_id: manager_id,
@@ -151,6 +161,42 @@ export async function getMALByStatusAndUUID(uuid) {
 	}
 	return data;
 }
+
+export async function getActiveMALStatus(uuid) {
+	const { data, error } = await supabase.from("manager_availability_link").select(`
+	manager_id,
+	availability_id,
+	status,
+	availabilities!inner(emp_id, day, available_time_from, available_time_to, preferred_time_from, preferred_time_to)`).eq('status', '1')
+		.eq('availabilities.emp_id', uuid);
+
+	if (error) {
+		console.error("Failed to fetch data: ", error);
+	}
+	return data;
+}
+
+export async function acceptMAL(availability_id) {
+	const { data, error } = await supabase.from("manager_availability_link").update({
+		status: '1'
+	}).eq('availability_id', availability_id);
+
+	if (error) {
+		console.error("Failed to update data: ", error);
+	}
+
+	return data;
+}
+// And then remove the existing availability in MAL. Query active availability with status = 1. Then delete the availability with the same availability_id.
+
+export async function declineMAL(mal_id) {
+	const { error } = await supabase.from("manager_availability_link").delete().eq('mal_id', mal_id);
+
+	if (error) {
+		console.error("Failed to delete data: ", error);
+	}
+}
+// And then delete the availability with the same availability_id.
 
 export async function createAvailability(employee_id, day, available_time_from, available_time_to, preferred_time_from, preferred_time_to) {
 	const { data, error } = await supabase.from("availabilities").insert({
