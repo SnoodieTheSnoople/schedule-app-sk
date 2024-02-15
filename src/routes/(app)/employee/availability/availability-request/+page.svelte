@@ -20,6 +20,9 @@
 		modalData = event.detail;
 	}
 
+// 	TODO: Fetch request after submitting availability.
+// 	TODO: Selection validation.
+
 </script>
 
 <div class="mx-auto p-8 space-y-8 w-full h-full bg-white">
