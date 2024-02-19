@@ -114,11 +114,13 @@
 </script>
 
 <div class="mx-auto p-8 space-y-8 w-full h-full bg-white">
-	<h1 class="h1 font-bold">{name}</h1>
+	<div class="grid grid-cols-2">
+		<h1 class="h1 font-bold">{name}</h1>
 
-	<div class="flex justify-end gap-1">
-		<button class="btn btn-success text-white" value="1" on:click={handleClick}>ACCEPT</button>
-		<button class="btn btn-error text-white" value="0" on:click={handleClick}>DENY</button>
+		<div class="flex justify-end gap-1">
+			<button class="btn btn-success text-white" value="1" on:click={handleClick}>ACCEPT</button>
+			<button class="btn btn-error text-white" value="0" on:click={handleClick}>DENY</button>
+		</div>
 	</div>
 
 	{#each Object.entries(availabilityRequest) as [tmp, request]}
