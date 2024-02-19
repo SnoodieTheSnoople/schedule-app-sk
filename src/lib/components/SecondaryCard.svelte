@@ -1,22 +1,14 @@
 <script>
-	/**
-	 * @type {string}
-	 */
+	/** @type {string} */
 	export let title;
 
-	/**
-	 * @type {string}
-	 */
+	/** @type {string} */
 	export let left_content;
 
-	/**
-	 * @type {string}
-	 */
+	/** @type {string} */
 	export let right_content;
 
-	/**
-	 * @type {string}
-	 */
+	/** @type {string} */
 	export let bottom_content;
 </script>
 

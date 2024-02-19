@@ -36,6 +36,7 @@
 	</div>
 
 	{#each days as day}
-		<NAvailabilityCard title="{day.toUpperCase()}" left_content="" right_content="" bottom_content="" on:click={toggleModal}/>
+		<NAvailabilityCard title="{day.toUpperCase()}" left_content="" right_content=""
+											 bottom_content="" on:click={toggleModal}/>
 	{/each}
 </div>
