@@ -70,7 +70,8 @@ export async function getAvailabilityOnUUID(uuid) {
 	preferred_time_from,
 	preferred_time_to`).eq('emp_id', uuid);*/
 
-	const { data, error } = await supabase.from("availabilities").select(`
+	const { data, error } = await supabase.from("availabilities")
+		.select(`
 	day,
 	available_time_from,
 	available_time_to,

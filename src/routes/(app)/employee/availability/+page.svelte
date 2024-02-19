@@ -41,20 +41,17 @@
 		console.log(daysWithAvailability);
 	}
 
-// 	TODO: Create manager view for availability.
-
 </script>
 
 <div class="mx-auto p-8 space-y-8 w-full h-full bg-white">
 	<h1 class="h1 font-bold">AVAILABILITY</h1>
-	<!-- TODO: Button to redirect. -->
 	<button class="btn btn-primary" on:click={handleClick}>New Availability</button>
-
 
 	{#each daysWithAvailability as dwa}
 		{#if dwa.availability !== null}
-			<SecondaryCard title={dwa.day.toUpperCase()} left_content={dwa.availability.available_time_from} right_content={dwa.availability.available_time_to}
-			bottom_content="{dwa.availability.preferred_time_from} - {dwa.availability.preferred_time_to}"/>
+			<SecondaryCard title={dwa.day.toUpperCase()} left_content={dwa.availability.available_time_from}
+										 right_content={dwa.availability.available_time_to}
+										 bottom_content="{dwa.availability.preferred_time_from} - {dwa.availability.preferred_time_to}"/>
 		{:else}
 			<SecondaryCard title={dwa.day.toUpperCase()} left_content="" right_content="" bottom_content=""/>
 		{/if}
