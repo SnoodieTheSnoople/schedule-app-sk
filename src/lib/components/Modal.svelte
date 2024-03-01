@@ -157,21 +157,22 @@
 	<!-- Modal body -->
 	<div class="modal-box">
 		<h3 class="font-bold text-lg">{title} Employee</h3>
-		<p>{date.toString()}</p>
+<!--		<p>{date.toString()}</p>-->
 
 		<form id="modalForm" on:submit={handleSubmit}>
+
+			{#if modalType === 1 || modalType === 2}
 			<div class="grid grid-cols-3">
 				<p class="flex items-center justify-center">Employee</p>
 				<select id="employeeSelection" class="select select-accent w-full max-w-xs col-span-2" bind:value={selectedEmployee} on:change={fillReadonlyFields}>
 <!--					<option>Select Employee</option>	Will throw TypeError.-->
-					<!-- TODO: Create separate logic for remove button when table is empty. -->
 					{#each employees as employee}
-						<option value="{employee.id}">{employee.users.firstname} {employee.users.surname}</option>
+						{#if !schedule.find(emp => emp.emp_id === employee.id)}
+							<option value="{employee.id}">{employee.users.firstname} {employee.users.surname}</option>
+						{/if}
 					{/each}
 				</select>
 			</div>
-
-			{#if modalType === 1 || modalType === 2}
 				<div class="divider"></div>
 
 				<div class="grid grid-cols-3 gap-1">
@@ -213,6 +214,18 @@
 
 
 			{#if modalType === 0}
+
+				<div class="grid grid-cols-3">
+					<p class="flex items-center justify-center">Employee</p>
+					<select id="employeeSelection" class="select select-accent w-full max-w-xs col-span-2" bind:value={selectedEmployee} on:change={fillReadonlyFields}>
+						<!--					<option>Select Employee</option>	Will throw TypeError.-->
+						{#each employees as employee}
+							{#if schedule.find(emp => emp.emp_id === employee.id)}
+								<option value="{employee.id}">{employee.users.firstname} {employee.users.surname}</option>
+							{/if}
+						{/each}
+					</select>
+				</div>
 
 				<div class="divider"></div>
 
