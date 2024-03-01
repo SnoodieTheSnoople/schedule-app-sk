@@ -125,9 +125,9 @@
 	</div>
 
 	<div class="grid grid-cols-3">
-		<button class="btn text-end" on:click={lastWeek}>L</button>
-		<p class="text-center">{start} - {end}</p>
-		<button class="btn text-start" on:click={nextWeek}>R</button>
+		<button class="btn text-end" on:click={lastWeek}>Last Week</button>
+		<p class="text-center font-bold">{start} - {end}</p>
+		<button class="btn text-start" on:click={nextWeek}>Next Week</button>
 	</div>
 	<button class="btn text-center" on:click={currentWeek}>Current Date</button>
 

@@ -108,9 +108,9 @@
 	<h1 class="h1 font-bold">CALENDAR</h1>
 	{#if isManager}
 		<div class="grid grid-cols-3">
-			<button class="btn text-end" on:click={lastWeek}>L</button>
+			<button class="btn text-end" on:click={lastWeek}>Last Week</button>
 			<p class="text-center"><b>{start} - {end}</b></p>
-			<button class="btn text-start" on:click={nextWeek}>R</button>
+			<button class="btn text-start" on:click={nextWeek}>Next Week</button>
 		</div>
 		<button class="btn text-center" on:click={currentWeek}>Current Date</button>
 
