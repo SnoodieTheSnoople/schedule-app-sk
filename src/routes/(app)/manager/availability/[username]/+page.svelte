@@ -8,6 +8,8 @@
 	/** @type {Object[]} */
 	let availabilityRequest = {};
 
+	let requestForManager = {};
+
 	/** @type {string} */
 	let name = "";
 
@@ -17,7 +19,7 @@
 	async function handleClick(event) {
 		if (event.target.value === "1") {
 			try {
-				console.log("accepted");
+				// console.log("accepted");
 				// Get current active request.
 
 				/*getActiveMALStatus(data.username).then((res) => {
@@ -49,21 +51,21 @@
 				});*/
 
 				activeAvailability = await getActiveMALStatus(data.username);
-				console.log("Active MAL Status");
-				console.log(activeAvailability);
+				// console.log("Active MAL Status");
+				// console.log(activeAvailability);
 
 				for (const request of availabilityRequest) {
-					console.log("Availability Request:");
-					console.log(request);
-					console.log(request.availability_id);
+					// console.log("Availability Request:");
+					// console.log(request);
+					// console.log(request.availability_id);
 
 					console.log(await acceptMAL(request.availability_id));
 				}
 
 				for (const active of activeAvailability) {
-					console.log("Active Availability:");
-					console.log(active);
-					console.log(active.availability_id);
+					// console.log("Active Availability:");
+					// console.log(active);
+					// console.log(active.availability_id);
 					await removeAvailability(active.availability_id);
 				}
 
@@ -73,15 +75,15 @@
 			}
 
 		} else {
-			console.log("denied");
+			// console.log("denied");
 			// Iterate and remove all requests.
 			// Iterate and remove all availabilities.
 			// Redirect to manager/availability page.
 			try {
 				for (const request of availabilityRequest) {
-					console.log("Availability Request:");
-					console.log(request);
-					console.log(request.availability_id);
+					// console.log("Availability Request:");
+					// console.log(request);
+					// console.log(request.availability_id);
 					await removeMAL(request.availability_id);
 					await removeAvailability(request.availability_id);
 				}
@@ -97,14 +99,18 @@
 	getMALByStatusAndUUID(data.username).then((res) => {
 		availabilityRequest = res;
 
+		// Refinement of availability request to only show requests for the manager.
+		requestForManager = availabilityRequest.filter((request) => request.manager_id === data.session?.user.id);
+		// console.log(requestForManager);
+
 		getUserByUUID(data.username).then((user) => {
-			console.log("User data:")
-			console.log(user);
-			console.log("Availability Request:")
-			console.log(availabilityRequest);
+			// console.log("User data:")
+			// console.log(user);
+			// console.log("Availability Request:")
+			// console.log(availabilityRequest);
 
 			user.forEach((user) => {
-				if (user.id === data.session?.user.id) {
+				if (user.id === data.username) {
 					name = user.firstname + " " + user.surname;
 				}
 			});
@@ -123,7 +129,7 @@
 		</div>
 	</div>
 
-	{#each Object.entries(availabilityRequest) as [tmp, request]}
+	{#each Object.entries(requestForManager) as [tmp, request]}
 		<SecondaryCard title={request.availabilities.day.toUpperCase()}
 									 left_content={request.availabilities.available_time_from}
 									 right_content={request.availabilities.available_time_to}

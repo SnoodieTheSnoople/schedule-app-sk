@@ -8,11 +8,11 @@
 	let isManager = false;
 
 	async function getRequests() {
-		return getMALByStatus();
+		// console.log(data.session?.user.id)
+		return getMALByStatus(data.session?.user.id);
 	}
 
 	function checkManager() {
-		// console.log(data.session?.user.id);
 		getManagerOnUUID(data.session?.user.id).then((result) => {
 			if (result.length === 0) {
 				isManager = false;
@@ -22,6 +22,7 @@
 			}
 		});
 	}
+
 	checkManager();
 
 	getRequests().then((req) => {

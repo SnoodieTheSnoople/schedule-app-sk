@@ -123,13 +123,13 @@ export async function createMAL(manager_id, availability_id, status) {
 
 }
 
-export async function getMALByStatus() {
+export async function getMALByStatus(mgr_uuid) {
 	const { data, error } = await supabase.from("manager_availability_link")
 		.select(`
 	manager_id,
 	availability_id,
 	status,
-	availabilities!inner(emp_id, day)`).eq('status', '0');
+	availabilities!inner(emp_id, day)`).eq('status', '0').eq('manager_id', mgr_uuid);
 
 	if (error) {
 		console.error("Failed to fetch data: ", error);
