@@ -42,8 +42,10 @@
 				emp_id: schedule.emp_id,
 				time_from: schedule.time_from,
 				time_to: schedule.time_to,
-				name: schedule.emp_id === employees[index].id ?
-					`${employees[index].users.firstname} ${employees[index].users.surname}` : ""
+				// name: schedule.emp_id === employees[index].id ?
+				// 	`${employees[index].users.firstname} ${employees[index].users.surname}` : "N/A"
+				name: employees.find(employee => employee.id === schedule.emp_id).users.firstname + " " +
+					employees.find(employee => employee.id === schedule.emp_id).users.surname
 			}));
 		} else {
 			combinedEmployeeSchedule = {};

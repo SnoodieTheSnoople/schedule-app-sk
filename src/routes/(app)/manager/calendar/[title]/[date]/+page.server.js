@@ -7,9 +7,12 @@ export async function load({ params }) {
 	let employeesSchedule = await getSchedules(date);
 	let availabilitiesData = await getAvailabilities(title);
 
+	console.log("Employee Names: ");
 	console.log(employeesData);
+	console.log("The schedule: ");
 	console.log(employeesSchedule);
-	console.log(availabilitiesData);
+	// console.log("The availabilities: ");
+	// console.log(availabilitiesData);
 
 	return {
 		employees: employeesData ?? [],
