@@ -81,7 +81,8 @@
 		//schedules = await getScheduleOnUUID(data.session?.user.id);
 		console.log(data.session?.user.id);
 		//return await getScheduleOnUUID(data.session?.user.id);
-		return await getScheduleDateRange(data.session?.user.id, format(start, 'yyyy-MM-dd'), format(end, 'yyyy-MM-dd'));
+		return await getScheduleDateRange(data.session?.user.id, format(start, 'yyyy-MM-dd'),
+			format(end, 'yyyy-MM-dd'));
 
 	}
 

@@ -11,6 +11,16 @@ export async function getScheduleOnUUID(uuid) {
 	return data;
 }
 
+export async function getManagerOnUUID(uuid){
+	const { data, error } = await supabase.from("manager").select('*').eq('id', uuid);
+
+	if(error) {
+		console.error("Unable to fetch data: ", error);
+	}
+
+	return data;
+}
+
 export async function getUsersAndNames() {
 	const { data, error } = await supabase.from("employees").select(`
 	id,
@@ -114,7 +124,8 @@ export async function createMAL(manager_id, availability_id, status) {
 }
 
 export async function getMALByStatus() {
-	const { data, error } = await supabase.from("manager_availability_link").select(`
+	const { data, error } = await supabase.from("manager_availability_link")
+		.select(`
 	manager_id,
 	availability_id,
 	status,
@@ -285,11 +296,13 @@ export async function removeSchedule(employee_id, schedule_date) {
  * @return {Promise<emp_id: string, date: string, time_from: string, time_to: string>[]}
  */
 export async function getScheduleDateRange(uuid, start, end) {
-	const { data, error } = await supabase.from("schedules").select(`
+	const { data, error } = await supabase.from("schedules")
+		.select(`
 	emp_id,
 	date,
 	time_from,
-	time_to`).eq('emp_id', uuid).filter('date', 'gte', start).filter('date', 'lte', end);
+	time_to`).eq('emp_id', uuid).filter('date', 'gte', start)
+		.filter('date', 'lte', end);
 
 	if (error) {
 		console.error("Failed to fetch data: ", error);
