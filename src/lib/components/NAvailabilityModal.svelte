@@ -11,6 +11,9 @@
 	/** @type {string} */
 	export let uuid;
 
+	/** @type {function(): void}*/
+	export let updateContent;
+
 	/** @type {boolean} */
 	let isOpen = true;
 
@@ -41,13 +44,13 @@
 		return hoursArray;
 	}
 
-	function handleSubmit() {
+	async function handleSubmit() {
 		/*console.log('submit');
 		console.log(availableTimeFrom);
 		console.log(availableTimeTo);
 		console.log(preferredShiftFrom);
 		console.log(preferredShiftTo);*/
-		createAvailability(uuid, modalData.title.toLowerCase(), availableTimeFrom, availableTimeTo,
+		/*createAvailability(uuid, modalData.title.toLowerCase(), availableTimeFrom, availableTimeTo,
 			preferredShiftFrom, preferredShiftTo).then((availabilityData) => {
 				console.log(availabilityData);
 
@@ -57,10 +60,26 @@
 					managerData.forEach((manager) => {
 						createMAL(manager.id, availabilityData[0].id, 0).then((data) => {
 							console.log(data);
+							update();
 						});
 					});
 				});
-		});
+		});*/
+
+		const availabilityData = await createAvailability(uuid, modalData.title.toLowerCase(), availableTimeFrom, availableTimeTo,
+			preferredShiftFrom, preferredShiftTo);
+
+		console.log(availabilityData);
+
+		const managerData = await getManagers();
+		console.log(managerData);
+
+		for (const manager of managerData) {
+			const data = await createMAL(manager.id, availabilityData[0].id, 0);
+			console.log(data);
+		}
+
+		updateContent();
 	}
 
 </script>

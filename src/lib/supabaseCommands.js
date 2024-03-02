@@ -120,6 +120,37 @@ export async function createMAL(manager_id, availability_id, status) {
 	}
 
 	return data;
+}
+
+export async function getAvailabilityThroughMALByUUIDAndStatus(uuid, status) {
+	const { data, error } = await supabase.from("manager_availability_link").select(`
+	availability_id,
+	status,
+	availabilities!inner(emp_id, day, available_time_from, available_time_to, preferred_time_from, preferred_time_to)`)
+		.eq('status', status).eq('availabilities.emp_id', uuid);
+
+	if (error) {
+		console.error("Failed to fetch data: ", error);
+	}
+
+	return data;
+}
+
+export async function getAvailabilityWhereMALStatusIsZero(uuid) {
+	const { data, error } = await supabase.from("availabilities").select(`
+	day,
+	available_time_from,
+	available_time_to,
+	preferred_time_from,
+	preferred_time_to,
+	manager_availability_link!inner(status)`).eq('emp_id', uuid)
+		.eq('manager_availability_link.status', '0');
+
+	if (error) {
+		console.error("Failed to fetch data: ", error);
+	}
+
+	return data;
 
 }
 

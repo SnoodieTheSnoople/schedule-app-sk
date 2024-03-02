@@ -31,7 +31,7 @@
 		</div>
 	</div>
 	<div class="col-span-7 grid grid-cols-2 justify-center items-center">
-		{#if left_content !== "" && right_content !== "" && bottom_content !== ""}
+		{#if left_content !== "" && right_content !== ""}
 		<span class="pl-4 col-span-1">
 			<b>Available From:</b> {left_content}
 		</span>
@@ -39,7 +39,7 @@
 			<b>Available To:</b> {right_content}
 		</span>
 
-			<span class="pl-4 col-span-1">
+			<span class="pl-4 col-span-2">
 			<b>Preferred Shift:</b> {bottom_content}
 		</span>
 
@@ -50,6 +50,8 @@
 		{/if}
 	</div>
 	<div class="col-span-1 flex justify-center items-center">
-		<button class="btn btn-primary" on:click={handleClick}>EDIT</button>
+		{#if left_content === "" && right_content === ""}
+		<button class="btn btn-primary" on:click={handleClick}>ADD</button>
+		{/if}
 	</div>
 </div>

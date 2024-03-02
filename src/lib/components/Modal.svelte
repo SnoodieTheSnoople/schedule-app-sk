@@ -54,8 +54,6 @@
 		isOpen = !isOpen;
 	}*/
 
-	// TODO: Validation for when creating a new schedule. Ensure that the employee already is not scheduled for that day.
-
 	function createTitle() {
 		if (modalType === 1) return "Add";
 		else if (modalType === 2) return "Edit";
