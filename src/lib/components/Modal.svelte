@@ -118,16 +118,16 @@
 		});
 	}
 
-	function removeEmployee() {
+	 async function removeEmployee() {
 		try {
 			console.log(selectedEmployee.toString());
-			commands.removeSchedule(selectedEmployee.toString(), date)
+			await commands.removeSchedule(selectedEmployee.toString(), date)
 			updateTable();
 			toggleModal();
 		} catch (error) {
 			console.error(error);
 		}
-		updateTable;
+		// updateTable;
 	}
 
 	function editEmployee() {
