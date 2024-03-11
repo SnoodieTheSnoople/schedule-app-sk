@@ -68,7 +68,8 @@
 
 	function fillEmployeeAvailability() {
 		// selectedEmployee = event.target.value;
-		employeeAvailability = availabilities.find(x => x.employees.id === selectedEmployee);
+		employeeAvailability = availabilities.find(x => x.employees.id === selectedEmployee ? x : null);
+		console.log(employeeAvailability)
 	}
 
 	function fillEmployeeCurrentSchedule() {
@@ -137,6 +138,8 @@
 		console.log(newShiftTimeFrom);
 		console.log(newShiftTimeTo);
 	}
+
+	console.log(availabilities);
 </script>
 
 <dialog id="addUserModal" class="modal" class:modal-open={isOpen}>
@@ -160,31 +163,41 @@
 		<form id="modalForm" on:submit={handleSubmit}>
 
 			{#if modalType === 1 || modalType === 2}
-			<div class="grid grid-cols-3">
-				<p class="flex items-center justify-center">Employee</p>
-				<select id="employeeSelection" class="select select-accent w-full max-w-xs col-span-2" bind:value={selectedEmployee} on:change={fillReadonlyFields}>
-<!--					<option>Select Employee</option>	Will throw TypeError.-->
-					{#each employees as employee}
-						{#if !schedule.find(emp => emp.emp_id === employee.id)}
-							<option value="{employee.id}">{employee.users.firstname} {employee.users.surname}</option>
-						{/if}
-					{/each}
-				</select>
-			</div>
+				<div class="grid grid-cols-3">
+					<p class="flex items-center justify-center">Employee</p>
+					<select id="employeeSelection" class="select select-accent w-full max-w-xs col-span-2" bind:value={selectedEmployee} on:change={fillReadonlyFields}>
+						{#each employees as employee}
+							{#if !schedule.find(emp => emp.emp_id === employee.id)}
+								<option value="{employee.id}">{employee.users.firstname} {employee.users.surname}</option>
+							{/if}
+						{/each}
+					</select>
+				</div>
+
 				<div class="divider"></div>
 
 				<div class="grid grid-cols-3 gap-1">
 					<p class="flex items-center justify-center">Availability</p>
-					<input type="text" value="{employeeAvailability.available_time_from}" class="input input-bordered w-full max-w-xs" disabled />
-					<input type="text" value="{employeeAvailability.available_time_to}" class="input input-bordered w-full max-w-xs" disabled />
+					{#if employeeAvailability === undefined}
+						<input type="text" value="Not Available" class="input input-bordered w-full max-w-xs" disabled />
+						<input type="text" value="Not Available" class="input input-bordered w-full max-w-xs" disabled />
+					{:else}
+						<input type="text" value="{employeeAvailability.available_time_from}" class="input input-bordered w-full max-w-xs" disabled />
+						<input type="text" value="{employeeAvailability.available_time_to}" class="input input-bordered w-full max-w-xs" disabled />
+					{/if}
 				</div>
 
 				<div class="divider"></div>
 
 				<div class="grid grid-cols-3 gap-1">
 					<p class="flex items-center justify-center">Preferred Shift</p>
-					<input type="text" value="{employeeAvailability.preferred_time_from}" class="input input-bordered w-full max-w-xs" disabled />
-					<input type="text" value="{employeeAvailability.preferred_time_to}" class="input input-bordered w-full max-w-xs" disabled />
+					{#if employeeAvailability === undefined}
+						<input type="text" value="Not Available" class="input input-bordered w-full max-w-xs" disabled />
+						<input type="text" value="Not Available" class="input input-bordered w-full max-w-xs" disabled />
+					{:else}
+						<input type="text" value="{employeeAvailability.preferred_time_from}" class="input input-bordered w-full max-w-xs" disabled />
+						<input type="text" value="{employeeAvailability.preferred_time_to}" class="input input-bordered w-full max-w-xs" disabled />
+					{/if}
 				</div>
 
 
