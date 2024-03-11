@@ -127,11 +127,6 @@
 		} catch (error) {
 			console.error(error);
 		}
-		// updateTable;
-	}
-
-	function editEmployee() {
-
 	}
 
 	function handleChange() {
